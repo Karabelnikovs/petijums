@@ -4,14 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dižlīķu klēts · žogi un būvelementi</title>
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
   <nav>
     <b>Dižlīķu klēts</b>
     <a href="#zogi">Žogi</a>
+    <a href="#karte">Karte</a>
     <a href="#elementi">Būvelementi</a>
-    <a href="#slaidi">Slaidi</a>
+    <!-- <a href="#slaidi">Slaidi</a> -->
     <a href="#avoti">Avoti</a>
   </nav>
   <main>
@@ -130,6 +132,11 @@
 
     <p class="lead">Šajā izlasē Kurzeme ir zedeņi un kāršu žogs, Latgale ir guļbaļķi un naglots stāvžogs ar vārtiem. Tas ir novērojums par foto.</p>
 
+    <h2 id="karte">Karte</h2>
+    <p class="lead">Žogi Brīvdabas muzeja teritorijā. Karti var pietuvināt un attālināt. Cipars ir foto numurs.</p>
+    <p class="note">Vietas ir aptuvenas, saliktas pa novadiem: Kurzeme rietumos, Latgale austrumos. Precīzos punktus saliksim vēlāk.</p>
+    <div id="map"></div>
+
     <h2 id="elementi">Būvelementi</h2>
     <p class="lead">Viena ēka, piecas grupas. Kokam un akmenim rādām garumu, platumu un biezumu vai diametru. Laukums un tilpums ir tikai niedru jumtam. Ziemeļu fasāde ir četri posmi, 6 + 6 + 4 + 6 = 22 baļķi.</p>
 
@@ -146,20 +153,41 @@
             <polygon points="220,58 178,95 220,132" fill="none" stroke="#1c1916" stroke-width="1.3"/>
           </svg>
         </div>
-        <ol>
-          <li>Garums 11,98 m, platums 8,95 m. Lievenis ir dienvidos, bet kore ir pa vidu visai apmalei, tāpēc abām garajām plaknēm ir vienāda projekcija: 8,95 / 2 = <b>4,475 m</b>.</li>
-          <li>Kore no galiem ir ievilkta 2,50 m. Tas ir nolasīts no sarkanās līnijas. Kores garums ir 11,98 − 2 × 2,50 = <b>6,98 m</b>.</li>
-          <li>Gala trijstūris neaizņem visu galu. Tā pamats ir 4,40 m pa vidu galam. Līdz stūrim paliek (8,95 − 4,40) / 2 = <b>2,28 m</b>, un tie stūri pieder garajai plaknei.</li>
-          <li>Pacēlums no griezuma: 6,15 − 3,85 = <b>2,30 m</b>.</li>
-          <li>Garās plaknes slīpne ir √(4,475² + 2,30²) = <b>5,03 m</b>. Tabulas spāre 5,40 m ir garāka par šo ceļu no apmales līdz korei.</li>
-          <li>Gala plaknes slīpne ir √(2,50² + 2,30²) = <b>3,40 m</b>. Tabulas 2,61 m spāres ir īsākas par šo, tās nav visa gala plakne.</li>
-          <li>Gala plakne horizontāli: 4,40 × 2,50 / 2 = 5,50 m². Slīpi: 5,50 × 3,40 / 2,50 = <b>7,48 m²</b>. Divas: 14,96 m².</li>
-          <li>Garā plakne horizontāli: 11,98 × 4,475 − 5,50 = 48,11 m². Slīpi: 48,11 × 5,03 / 4,475 = <b>54,08 m²</b>. Divas: 108,16 m².</li>
-          <li>Laukums = 108,16 + 14,96 = <b>123,1 m²</b>. Biezums 0,30 m. Tilpums = 123,1 × 0,30 = <b>36,9 m³</b>. Tas ir seguma kārtas tilpums.</li>
-        </ol>
+        <ul class="measures">
+          <li>Apmale 11,98 × 8,95 m</li>
+          <li>Kore 6,98 m, ievilkta 2,50 m no galiem</li>
+          <li>Gala pamats 4,40 m · pacēlums 2,30 m</li>
+          <li>Slīpnes 5,03 m un 3,40 m</li>
+          <li>Garās plaknes 108,2 m², gali 15,0 m²</li>
+          <li>Biezums 30 cm</li>
+        </ul>
       </div>
+      <details>
+        <summary>Pilns aprēķins</summary>
+          <ol>
+            <li>Garums 11,98 m, platums 8,95 m. Lievenis ir dienvidos, bet kore ir pa vidu visai apmalei, tāpēc abām garajām plaknēm ir vienāda projekcija: 8,95 / 2 = <b>4,475 m</b>.</li>
+            <li>Kore no galiem ir ievilkta 2,50 m. Tas ir nolasīts no sarkanās līnijas. Kores garums ir 11,98 − 2 × 2,50 = <b>6,98 m</b>.</li>
+            <li>Gala trijstūris neaizņem visu galu. Tā pamats ir 4,40 m pa vidu galam. Līdz stūrim paliek (8,95 − 4,40) / 2 = <b>2,28 m</b>, un tie stūri pieder garajai plaknei.</li>
+            <li>Pacēlums no griezuma: 6,15 − 3,85 = <b>2,30 m</b>.</li>
+            <li>Garās plaknes slīpne ir √(4,475² + 2,30²) = <b>5,03 m</b>. Tabulas spāre 5,40 m ir garāka par šo ceļu no apmales līdz korei.</li>
+            <li>Gala plaknes slīpne ir √(2,50² + 2,30²) = <b>3,40 m</b>. Tabulas 2,61 m spāres ir īsākas par šo, tās nav visa gala plakne.</li>
+            <li>Gala plakne horizontāli: 4,40 × 2,50 / 2 = 5,50 m². Slīpi: 5,50 × 3,40 / 2,50 = <b>7,48 m²</b>. Divas: 14,96 m².</li>
+            <li>Garā plakne horizontāli: 11,98 × 4,475 − 5,50 = 48,11 m². Slīpi: 48,11 × 5,03 / 4,475 = <b>54,08 m²</b>. Divas: 108,16 m².</li>
+            <li>Laukums = 108,16 + 14,96 = <b>123,1 m²</b>. Biezums 0,30 m. Tilpums = 123,1 × 0,30 = <b>36,9 m³</b>. Tas ir seguma kārtas tilpums.</li>
+          </ol>
+      </details>
       <!-- <p class="note">2,50 m un 4,40 m ir nolasīti no sarkanās līnijas uz plāna, nevis no iepriekšējās shēmas. 30 cm ir pieņēmums. Meistari klētij bieži liek 25 cm, dzīvojamai mājai 30 cm.</p> -->
     </article>
+
+    <div class="house">
+      <canvas id="house-view"></canvas>
+      <div class="house-bar">
+        <button type="button" id="house-play">Spēlēt</button>
+        <input id="house-range" type="range" min="0" max="10" value="10">
+        <span id="house-label"></span>
+      </div>
+    </div>
+    <p class="note">Modelis ir samontētā klēts. Spēlēt saliek to pa posmiem, kā PDF animācijā. Skatu var pagriezt un pietuvināt.</p>
 
     <div class="library">
       <div>
@@ -182,7 +210,7 @@
       </aside>
     </div>
 
-    <h2 id="slaidi">Septiņi slaidi</h2>
+    <!-- <h2 id="slaidi">Septiņi slaidi</h2>
     <p class="note">Kreisā kolonna ir teksts uz slaida. Labā ir tas, ko pateikt. Kopā ap piecām minūtēm.</p>
     <div class="slides">
       <article class="slide">
@@ -241,7 +269,7 @@
         </div>
         <p class="say">Slaidos rādām tipus. Nākamie rasējumi ir seši: guļbaļķis, dēlis, spāre, lata, kolonna un akmens. Ēkas augstums tabulā ir 99 un 160 milimetri, blakus jumta augstumam ap divarpus metriem.</p>
       </article>
-    </div>
+    </div> -->
 
     <h2 id="avoti">Avoti</h2>
     <ul class="sources">
@@ -256,6 +284,19 @@
     </ul>
     <footer>Foto ir no grupas uzskaites. Klasifikācija ir pēc konstrukcijas, salikta šiem foto. Niedru laukums ir tuvinājums no plāna sarkanās līnijas un griezuma pacēluma.</footer>
   </main>
-  <script src="app.js?v=6"></script>
+  <div id="fence" hidden>
+    <article>
+      <button type="button" id="fence-x">Aizvērt</button>
+      <p class="kicker" id="fence-type"></p>
+      <h3 id="fence-title"></h3>
+      <p class="note" id="fence-where"></p>
+      <p id="fence-text"></p>
+      <p class="meta" id="fence-size"></p>
+      <img id="fence-img" alt="">
+    </article>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js?v=8"></script>
+  <script type="module" src="house.js?v=2"></script>
 </body>
 </html>

@@ -123,7 +123,7 @@ const openPhoto = (img) => {
   big.alt = img.alt;
   cap.textContent = img.parentElement.querySelector("figcaption")?.textContent || "";
   view.hidden = false;
-  document.body.style.overflow = "hidden";
+  pageLock();
   const start = frame(img);
   big.style.width = start.w + "px";
   big.style.height = start.h + "px";
@@ -136,6 +136,11 @@ const openPhoto = (img) => {
   }));
 };
 
+const pageLock = () => { document.body.style.overflow = "hidden"; };
+const pageUnlock = () => {
+  if (view.hidden && document.querySelector("#fence").hidden) document.body.style.overflow = "";
+};
+
 const closePhoto = () => {
   if (!current) return;
   const start = frame(current);
@@ -144,14 +149,72 @@ const closePhoto = () => {
   view.classList.remove("on");
   setTimeout(() => {
     view.hidden = true;
-    document.body.style.overflow = "";
+    pageUnlock();
   }, 420);
 };
 
-document.querySelectorAll(".photos img, .reed-grid img").forEach((img) => {
+document.querySelectorAll(".photos img, .reed-grid img, #fence-img").forEach((img) => {
   img.tabIndex = 0;
   img.addEventListener("click", () => openPhoto(img));
   img.addEventListener("keydown", (e) => { if (e.key === "Enter") openPhoto(img); });
 });
 view.addEventListener("click", closePhoto);
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePhoto(); });
+
+const fences = [
+  { n: 1, lat: 56.9936, lng: 24.2702, place: "Kauguri, jūra", region: "Kurzeme", type: "Zedeņu žogs", text: "Zari pīti stāvus starp horizontālām kārtīm.", size: "žogs 1300 mm · stabi 1580 mm", img: "foto/01-kaugari.JPG", alt: "Pīts zedeņu žogs, Kauguri" },
+  { n: 9, lat: 56.9910, lng: 24.2730, place: "Kuldīga", region: "Kurzeme", type: "Kāršu žogs", text: "Trīs tievākas kārtis uz mietiem, caurredzams.", size: "žogs 1000 mm · stabi 1250 mm", img: "foto/09-kuldiga.JPG", alt: "Kāršu žogs, Kuldīga" },
+  { n: 2, lat: 56.9934, lng: 24.2812, place: "Krāslava", region: "Latgale", type: "Guļbaļķu žogs", text: "Resni apaļkoki starp zemē ieraktiem stabiem.", size: "žogs 1300 mm · stabi 1670 mm", img: "foto/02-kraslava.JPG", alt: "Guļbaļķu žogs, Krāslava" },
+  { n: 4, lat: 56.9918, lng: 24.2802, place: "Krāslava, aile", region: "Latgale", type: "Guļbaļķu žogs", text: "Horizontālu baļķu pildījums ailē pie guļbūves.", size: "žogs 1800 mm", img: "foto/04-kraslava.JPG", alt: "Baļķu pildījums ailē, Krāslava" },
+  { n: 3, lat: 56.9926, lng: 24.2832, place: "Krāslava", region: "Latgale", type: "Stāvžogs", text: "Blīvi vertikāli mieti ar smailiem galiem, nagloti pie šķērskokiem.", size: "žogs 1860 mm", img: "foto/03-kraslava.png", alt: "Stāvžogs, Krāslava" },
+  { n: 5, lat: 56.9904, lng: 24.2844, place: "Rudzāti", region: "Latgale", type: "Stāvžogs", text: "Vertikālas latas ar atstarpēm un smailiem galiem.", size: "žogs 1750 mm", img: "foto/05-rudzati.JPG", alt: "Stāvžogs, Rudzāti" },
+  { n: 6, lat: 56.9944, lng: 24.2852, place: "Latgale, vārti", region: "Latgale", type: "Stāvžogs", text: "Dēļu vārti. Tā pati būve kā stāvžogam, tikai rūpīgāka aile.", size: "žogs 1430 mm · stabi 2000 mm", img: "foto/06-latgale.JPG", alt: "Dēļu vārti, Latgale" },
+  { n: 7, lat: 56.9892, lng: 24.2796, place: "Pasiena, vārti", region: "Latgale", type: "Stāvžogs", text: "Dēļu vārti starp stāvžoga posmiem.", size: "žogs 1530 mm · stabi 2100 mm", img: "foto/07-pasiena.JPG", alt: "Dēļu vārti, Pasiena" },
+  { n: 8, lat: 56.9886, lng: 24.2816, place: "Pasiena, dārzs", region: "Latgale", type: "Stāvžogs", text: "Zems žogs ap puķēm. Konstrukcija ir stāvžogs, darbs ir sargāt stādījumu.", size: "žogs 850 mm", img: "foto/08-pasiena.JPG", alt: "Zems dārza žogs, Pasiena" },
+];
+
+const fenceBox = document.querySelector("#fence");
+const openFence = (f) => {
+  document.querySelector("#fence-type").textContent = f.type;
+  document.querySelector("#fence-title").textContent = `${f.n} · ${f.place}`;
+  document.querySelector("#fence-where").textContent = f.region;
+  document.querySelector("#fence-text").textContent = f.text;
+  document.querySelector("#fence-size").textContent = f.size;
+  const img = document.querySelector("#fence-img");
+  img.src = f.img;
+  img.alt = f.alt;
+  fenceBox.hidden = false;
+  pageLock();
+  requestAnimationFrame(() => fenceBox.classList.add("on"));
+};
+const closeFence = () => {
+  if (fenceBox.hidden) return;
+  fenceBox.classList.remove("on");
+  setTimeout(() => {
+    fenceBox.hidden = true;
+    pageUnlock();
+  }, 300);
+};
+fenceBox.addEventListener("click", closeFence);
+fenceBox.querySelector("article").addEventListener("click", (e) => e.stopPropagation());
+document.querySelector("#fence-x").addEventListener("click", closeFence);
+
+const map = L.map("map", {
+  scrollWheelZoom: true,
+  minZoom: 14,
+  maxZoom: 19,
+  maxBounds: [[56.978, 24.25], [57.004, 24.305]],
+}).fitBounds([[56.9848, 24.2656], [56.9965, 24.2888]], { padding: [20, 20] });
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "&copy; OpenStreetMap",
+  maxZoom: 19,
+}).addTo(map);
+fences.forEach((f) => {
+  const icon = L.divIcon({ className: "", html: `<button class="pin" type="button">${f.n}</button>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.place}` }).addTo(map).on("click", () => openFence(f));
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (!view.hidden) closePhoto();
+  else closeFence();
+});
