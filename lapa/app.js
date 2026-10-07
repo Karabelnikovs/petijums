@@ -198,6 +198,32 @@ fenceBox.addEventListener("click", closeFence);
 fenceBox.querySelector("article").addEventListener("click", (e) => e.stopPropagation());
 document.querySelector("#fence-x").addEventListener("click", closeFence);
 
+const kinds = [
+  [1, "Stabu kāršu kaltos caurumos"],
+  [2, "Stabu kāršu gropēs ar atstarpi"],
+  [3, "Stabu kāršu gropēs bez atstarpes"],
+  [4, "Stabu kāršu pāra stabiem piesietas"],
+  [5, "Stabu kāršu pāra stabi atstutēti starp"],
+  [6, "Zedeņu vertikāli"],
+  [7, "Zedeņu horizontāli"],
+  [8, "Vilku žogs"],
+  [9, "Dēļu bez atstarpes"],
+  [10, "Dēļu ar atstarpi"],
+  [11, "Kāršu-dēļu ar naglām"],
+  [12, "Pienagloti zari"],
+  [13, "Dzīvžogs"],
+  [14, "Akmeņu žogs"],
+  [15, "Šķeltu koku žogs"],
+  [16, "Dēļu bez atstarpes ar formu"],
+  [17, "Stabu kāršu ar brīvpieejamiem zariem"],
+  [18, "Stāvžogs"],
+].map(([n, name], i) => ({ n, name, lat: 56.9956 - (i % 9) * 0.00105, lng: 24.2682 + Math.floor(i / 9) * 0.0022 }));
+const saved = JSON.parse(localStorage.getItem("fence-places") || "null");
+if (Array.isArray(saved)) saved.forEach((s) => {
+  const k = kinds.find((item) => item.n === s.n);
+  if (k && Number.isFinite(s.lat) && Number.isFinite(s.lng)) { k.lat = s.lat; k.lng = s.lng; }
+});
+
 const map = L.map("map", {
   scrollWheelZoom: true,
   minZoom: 14,
@@ -208,9 +234,48 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "&copy; OpenStreetMap",
   maxZoom: 19,
 }).addTo(map);
-fences.forEach((f) => {
-  const icon = L.divIcon({ className: "", html: `<button class="pin" type="button">${f.n}</button>`, iconSize: [28, 28], iconAnchor: [14, 14] });
-  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.place}` }).addTo(map).on("click", () => openFence(f));
+
+const markers = {};
+let selected = 0;
+const list = document.querySelector("#place-list");
+const savePlaces = () => localStorage.setItem("fence-places", JSON.stringify(kinds.map(({ n, lat, lng }) => ({ n, lat, lng }))));
+const drawList = () => {
+  list.innerHTML = "";
+  kinds.forEach((k) => {
+    const li = document.createElement("li");
+    if (k.n === selected) li.className = "on";
+    li.textContent = `${k.n} ${k.name} · ${k.lat.toFixed(5)}, ${k.lng.toFixed(5)}`;
+    li.addEventListener("click", () => {
+      selected = k.n;
+      map.setView([k.lat, k.lng], Math.max(map.getZoom(), 18));
+      drawList();
+      paintPins();
+    });
+    list.append(li);
+  });
+};
+const paintPins = () => document.querySelectorAll("#map .pin").forEach((el) => el.classList.toggle("on", +el.textContent === selected));
+kinds.forEach((k) => {
+  const icon = L.divIcon({ className: "", html: `<span class="pin">${k.n}</span>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+  const marker = L.marker([k.lat, k.lng], { icon, draggable: true, autoPan: true, title: `${k.n} ${k.name}` }).addTo(map);
+  marker.on("dragstart", () => { selected = k.n; paintPins(); });
+  marker.on("dragend", () => {
+    const p = marker.getLatLng();
+    k.lat = p.lat;
+    k.lng = p.lng;
+    savePlaces();
+    drawList();
+    paintPins();
+  });
+  markers[k.n] = marker;
+});
+drawList();
+document.querySelector("#place-copy").addEventListener("click", async () => {
+  const text = kinds.map((k) => `${k.n}\t${k.lat.toFixed(6)}\t${k.lng.toFixed(6)}\t${k.name}`).join("\n");
+  try { await navigator.clipboard.writeText(text); }
+  catch { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
+  document.querySelector("#place-copy").textContent = "Nokopēts";
+  setTimeout(() => { document.querySelector("#place-copy").textContent = "Kopēt koordinātas"; }, 1200);
 });
 
 document.addEventListener("keydown", (e) => {

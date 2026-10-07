@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dižlīķu klēts · žogi un būvelementi</title>
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -133,9 +133,13 @@
     <p class="lead">Šajā izlasē Kurzeme ir zedeņi un kāršu žogs, Latgale ir guļbaļķi un naglots stāvžogs ar vārtiem. Tas ir novērojums par foto.</p>
 
     <h2 id="karte">Karte</h2>
-    <p class="lead">Žogi Brīvdabas muzeja teritorijā. Karti var pietuvināt un attālināt. Cipars ir foto numurs.</p>
-    <p class="note">Vietas ir aptuvenas, saliktas pa novadiem: Kurzeme rietumos, Latgale austrumos. Precīzos punktus saliksim vēlāk.</p>
+    <p class="lead">18 žogu tipi. Cipars ir numurs no kopsavilkuma. Karti var pietuvināt un attālināt.</p>
+    <p class="note">Pagaidu novietošana: velc ciparu uz īsto vietu. Kad visi ir salikti, spied Kopēt un atsūti koordinātas.</p>
     <div id="map"></div>
+    <div class="place">
+      <button type="button" id="place-copy">Kopēt koordinātas</button>
+      <ul id="place-list"></ul>
+    </div>
 
     <h2 id="elementi">Būvelementi</h2>
     <p class="lead">Viena ēka, piecas grupas. Kokam un akmenim rādām garumu, platumu un biezumu vai diametru. Laukums un tilpums ir tikai niedru jumtam. Ziemeļu fasāde ir četri posmi, 6 + 6 + 4 + 6 = 22 baļķi.</p>
@@ -296,7 +300,7 @@
     </article>
   </div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=9"></script>
   <script type="module" src="house.js?v=4"></script>
 </body>
 </html>
