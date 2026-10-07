@@ -13,43 +13,46 @@ const stages = [
   "Niedru jumta segums",
   "Jumta piespiedējdēļi",
 ];
-const colors = [0x8a8175, 0xc4a574, 0x6b3a2a, 0x8d5a3c, 0xa97856, 0xb08968, 0xd7c4a3, 0xc4a882, 0xa98467, 0x6e4b32, 0x7a5236, 0x9a6b45, 0xc2a07a, 0xc4b48a, 0x5c4636];
 
 const canvas = document.querySelector("#house-view");
 const label = document.querySelector("#house-label");
 const range = document.querySelector("#house-range");
 const playBtn = document.querySelector("#house-play");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setClearColor(0xf4f0e8);
+renderer.setClearColor(0xd5d8dc);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.25;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 200);
-scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-const sun = new THREE.DirectionalLight(0xffffff, 1.15);
-sun.position.set(10, 16, 8);
-scene.add(sun);
-const mats = colors.map((c) => new THREE.MeshLambertMaterial({ color: c, side: THREE.DoubleSide }));
+scene.add(new THREE.HemisphereLight(0xf4f7fb, 0xd4cfc3, 0.9));
+const sun = new THREE.DirectionalLight(0xffffff, 2.2);
+const fill = new THREE.DirectionalLight(0xffffff, 1.1);
+scene.add(sun, fill);
+const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.88, metalness: 0 });
 
-const buf = await (await fetch("house.bin")).arrayBuffer();
+const buf = await (await fetch("house.bin?v=3")).arrayBuffer();
 const view = new DataView(buf);
-let o = 4;
-const count = view.getUint16(o, true); o += 2;
+let o = 6;
+const count = view.getUint16(4, true);
 const parts = [];
 const seen = {};
 for (let i = 0; i < count; i++) {
   const stage = view.getUint8(o);
-  const group = view.getUint8(o + 1);
-  const nv = view.getUint16(o + 2, true);
-  const nt = view.getUint16(o + 4, true);
-  o += 6;
+  const ntri = view.getUint32(o + 1, true);
+  o += 5;
+  const nv = ntri * 3;
   const pos = new Float32Array(nv * 3);
   for (let k = 0; k < pos.length; k++) { pos[k] = view.getFloat32(o, true); o += 4; }
-  const idx = new Uint16Array(nt * 3);
-  for (let k = 0; k < idx.length; k++) { idx[k] = view.getUint16(o, true); o += 2; }
+  const nrm = new Float32Array(nv * 3);
+  for (let k = 0; k < nrm.length; k++) { nrm[k] = view.getInt8(o) / 127; o += 1; }
+  const col = new Float32Array(nv * 3);
+  for (let k = 0; k < col.length; k++) { col[k] = view.getUint8(o) / 255; o += 1; }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-  geo.setIndex(new THREE.BufferAttribute(idx, 1));
-  geo.computeVertexNormals();
-  const mesh = new THREE.Mesh(geo, mats[group]);
+  geo.setAttribute("normal", new THREE.BufferAttribute(nrm, 3));
+  geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+  const mesh = new THREE.Mesh(geo, mat);
   scene.add(mesh);
   seen[stage] = (seen[stage] || 0) + 1;
   parts.push({ mesh, stage, order: seen[stage] });
@@ -57,6 +60,11 @@ for (let i = 0; i < count; i++) {
 
 const box = new THREE.Box3().setFromObject(scene);
 const target = box.getCenter(new THREE.Vector3());
+sun.position.copy(target).add(new THREE.Vector3(-6, 11, 8));
+fill.position.copy(target).add(new THREE.Vector3(8, 6, -5));
+sun.target.position.copy(target);
+fill.target.position.copy(target);
+scene.add(sun.target, fill.target);
 let rotY = 0.7, rotX = 0.35, dist = box.getSize(new THREE.Vector3()).length() * 0.85;
 let stage = 10;
 
@@ -128,6 +136,7 @@ const fit = () => {
   camera.updateProjectionMatrix();
 };
 new ResizeObserver(fit).observe(canvas);
+fit();
 show(10, true);
 
 (function frame(now) {
