@@ -153,10 +153,14 @@ const closePhoto = () => {
   }, 420);
 };
 
-document.querySelectorAll(".photos img, .reed-grid img, #fence-img").forEach((img) => {
-  img.tabIndex = 0;
-  img.addEventListener("click", () => openPhoto(img));
-  img.addEventListener("keydown", (e) => { if (e.key === "Enter") openPhoto(img); });
+document.addEventListener("click", (e) => {
+  const img = e.target.closest(".carousel img, .reed-grid img, #fence-img");
+  if (img) openPhoto(img);
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter") return;
+  const img = e.target.closest?.(".carousel img, .reed-grid img, #fence-img");
+  if (img) openPhoto(img);
 });
 view.addEventListener("click", closePhoto);
 
@@ -180,6 +184,141 @@ const fences = [
   { n: 17, lat: 56.987191, lng: 24.281521, name: "Stabu kāršu ar brīvpieejamiem zariem" },
   { n: 18, lat: 56.988785, lng: 24.279007, name: "Stāvžogs" },
 ];
+
+const copy = {
+  1: ["Stabi zemē. Kārtis iet caur kaltiem caurumiem.", "No pārpalikumiem: šķībi, zaraini stabi un mieti kārtīm.", "Biežāk ganību robeža, retāk tikai sētas nodaļošana.", "Egle un priede", ["Vidzemes zemnieka sēta"]],
+  2: ["Kārtis gropēs. Atstarpi starp tām tur klucīši.", "Spraugu var mainīt, neliekot vai liekot klucīšus.", "Aiztur lopus. Caur redzamo spraugu nelaiž lielākus dzīvniekus.", "Egle un priede", ["Kurzemes zemnieka sēta", "Zemgale", "Kurzemes krasts"]],
+  3: ["Kārtis gropēs cieši cita virs citas, bez atstarpes.", "Blīvāks par caurumu žogu. Tas pats pārpalikumu koks.", "Aiztur lopus. Caur žogu neredz.", "Egle un priede", ["Krāslava"]],
+  4: ["Kārtis starp pāra stabiem un piesietas pie tiem.", "Savienojums ir saite, nevis caurums stabā.", "Aiztur lopus.", "Koks un sējums", ["Latgale"]],
+  5: ["Kārtis guļ uz horizontāla koka starp stabiem.", "Kārtis neiet caur stabu. Tās balstās uz šķērskoka.", "Aiztur lopus.", "Egle un priede", ["Latgales ciems", "Latgale"]],
+  6: ["Stabi un horizontālas kārtis. Zari pīti stāvus starp kārtīm.", "No pārpalikumiem: resnie baļķi stabiem, tievie zari pildījumam.", "Norobežo zemi. Ja augsts, aiztur arī dzīvniekus.", "Priede, egle, bērzs", ["Vidzemes sēta", "Latgales ciems", "Latgales podnieka sēta"]],
+  7: ["Zari pīti guļus starp vertikāliem mietiem.", "Zemāks pinums. Materiāls tas pats, kas vertikālajam.", "Norobežo zemi. Augstums nosaka, vai aiztur dzīvniekus.", "Priede, egle, bērzs", ["Kurzemes zvejnieku ciems"]],
+  8: ["Pāra stabi. Starp tiem baļķi slīpi, piesieti pie stabiem.", "Pietiek ar cirvi. Vajag daudz atzarota koka. Muzejā ir viens šāds žogs.", "Aiztur dzīvniekus.", "Egle. Sējums no klūgām, lazdas vai bērza", ["Latgales ciems", "Latgales ciems", "Latgales ciems"]],
+  9: ["Starp stabiem kārtis, pie tām pienagloti plati dēļi bez atstarpes.", "Latgalē ceļa malā žogs bija obligāts. No 18. gs., kad ir nagla un zāģēts dēlis.", "Iezīmē teritoriju, dod privātumu un izskatu.", "Egles vai priedes dēļi", ["Latgale"]],
+  10: ["Šaurāki dēļi ar atstarpi, pienagloti pie kārtīm.", "Tas pats naglotais žogs. Sprauga ir daļa no izskata.", "Iezīmē teritoriju un sakārto pagalmu.", "Egles vai priedes dēļi", ["Latgale"]],
+  11: ["Kāršu žogs, kam pienagloti dēļi, lai būtu blīvāks.", "Uzstādīt tikpat viegli kā kāršu žogu. Iespējams vēlāk pārtaisīts.", "Sētām ar dažāda izmēra lopiem.", "Egle vai priede. Dēļi parasti no egles", ["Vidzemes zemnieka sēta", "Vidzemes zemnieka sēta"]],
+  12: ["Šauri zari pienagloti pie kārts.", "Nav zāģētu dēļu. Nagla tur zarus.", "Iezīmē teritoriju un dod izskatu.", "Zari, naglas", ["Jaunsēta"]],
+  13: ["Apgriezts krūmu vainags rindā.", "Dzīvs un regulāri apgriezts.", "Dekoratīvs, retāk norobežo zemi.", "Blīvi krūmi un koki, piemēram tūjas", ["Jaunsaimniecība"]],
+  14: ["Lieli akmeņi brīvi rindā, bez javas.", "Piejūrā, kur akmeņu daudz un koka maz. Vēsturiskās sētās Latvijā rets.", "Atdala sētu no kaimiņa.", "Lieli akmeņi", ["Kurzemes zvejnieku ciems", "Kurzemes zvejnieku ciems"]],
+  15: ["Ap 50 cm koki, augša sašķelta. Šķēlumā ielikts miets.", "Ātri uzceļams. Augstuma dēļ nelaiž vidējus un lielus lopus.", "Dobēm sētas iekšā.", "Tievie egļu vai retāk lapkoku zari", ["Latgales ciems"]],
+  16: ["Plati dēļi bez atstarpes, augšā neliels griezums.", "Katra saimniecība grieza savu augšmalu.", "Iezīmē teritoriju, dod privātumu un izskatu.", "Egles vai priedes dēļi", ["Latgales ciems"]],
+  17: ["Kāršu rāmis. Kārtis nav cieši nofiksētas, virsū brīvi zari.", "Spraugas maina ar baļķu atgriezumiem. Zarus ņem no apkārtnes.", "Aiztur lopus.", "Egle, priede un zari", ["Latgales krievu zemnieka sēta"]],
+  18: ["Baļķi iesprausti zemē, gali saasināti. Vidū miets caur kaltiem caurumiem.", "Masīvākais muzejā, grūti uzstādīt.", "Sētas priekšā pret ielu. Latgalē žogs pret ceļu bija prasība.", "Egles un priedes baļķi", ["Latgales ciems", "Latgales ciems"]],
+};
+
+const schemes = {
+  konstrukcija: [
+    ["Stabu un kāršu rāmis", "Stabi zemē un horizontālas kārtis, līdz aptuveni 6,5 m. Atšķiras savienojums.", [1, 2, 3, 4, 5, 17]],
+    ["Pinums uz kāršu rāmja", "Tas pats rāmis. Zari pīti starp kārtīm.", [6, 7]],
+    ["Naglots pildījums", "Kārtis un nagla. Dēļi vai zari.", [9, 10, 11, 12, 16]],
+    ["Bez kāršu rāmja", "Žogu tur stabi, akmeņi, augs vai zemē sprausti baļķi.", [8, 13, 14, 15, 18]],
+  ],
+  darbs: [
+    ["Aizturēt lopus", "Ganības un sētas, no kurām lopi nedrīkst iziet.", [1, 2, 3, 4, 5, 8, 11, 17]],
+    ["Norobežot teritoriju", "Robeža, ceļš vai kaimiņu sēta. Augsts pinums aiztur arī dzīvniekus.", [6, 7, 14, 18]],
+    ["Sargāt dobes", "Zems žogs sētas iekšā.", [15]],
+    ["Izskats un privātums", "Ceļa mala, pagalms, apgriezts vainags.", [9, 10, 12, 13, 16]],
+  ],
+  paņēmiens: [
+    ["Cirvis un sējums", "Apaļkoks, grope vai caurums, saite no klūgām.", [1, 2, 3, 4, 5, 6, 7, 8, 15, 17, 18]],
+    ["Nagla un zāģēts koks", "No 18. gs., kad nagla un dēlis ir pieejami.", [9, 10, 11, 12, 16]],
+    ["Akmens", "Brīvi likti akmeņi, bez javas.", [14]],
+    ["Augs", "Dzīvs krūms, ko apgriež.", [13]],
+  ],
+};
+
+const post = (x, y = 12, h = 98) => `<rect x="${x}" y="${y}" width="7" height="${h}" fill="#1c1916"/>`;
+const bar = (y, x = 24, w = 112, h = 6) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#7c3a2d"/>`;
+const boards = (gap, top = 24) => Array.from({ length: 12 }, (_, i) => {
+  const x = 22 + i * (8 + gap);
+  return `<polygon points="${x},${108} ${x},${top + 8} ${x + 4},${top} ${x + 8},${top + 8} ${x + 8},${108}" fill="#1c1916"/>`;
+}).join("");
+const diagrams = {
+  1: `${post(14)}${post(139)}${bar(34, 14, 132)}${bar(60, 14, 132)}${bar(86, 14, 132)}<circle cx="17.5" cy="37" r="3.2" fill="#f4f0e8"/><circle cx="17.5" cy="63" r="3.2" fill="#f4f0e8"/><circle cx="17.5" cy="89" r="3.2" fill="#f4f0e8"/>`,
+  2: `${post(14)}${post(139)}${bar(28)}${bar(50)}${bar(72)}${bar(94)}<rect x="22" y="36" width="8" height="12" fill="#5e584e"/><rect x="130" y="58" width="8" height="12" fill="#5e584e"/><rect x="22" y="80" width="8" height="12" fill="#5e584e"/>`,
+  3: `${post(14)}${post(139)}${[22, 34, 46, 58, 70, 82, 94].map((y, i) => `<rect x="24" y="${y}" width="112" height="12" fill="${i % 2 ? "#6d665c" : "#5e584e"}"/>`).join("")}`,
+  4: `${post(8)}${post(18)}${post(132)}${post(142)}${bar(32, 26, 106)}${bar(58, 26, 106)}${bar(84, 26, 106)}<circle cx="21" cy="35" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="61" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="21" cy="87" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/>`,
+  5: `${post(14)}${post(139)}<rect x="24" y="86" width="112" height="8" fill="#1c1916"/>${bar(22, 32, 96, 12)}${bar(40, 32, 96, 12)}${bar(58, 32, 96, 12)}${bar(74, 32, 96, 12)}`,
+  6: `${post(16, 16, 96)}${post(137, 16, 96)}${bar(34, 16, 128, 3)}${bar(62, 16, 128, 3)}${bar(90, 16, 128, 3)}<path d="M28 28 C34 48 26 70 32 100 M44 26 C38 50 48 72 42 104 M58 24 C64 50 52 74 60 106 M72 26 C66 48 76 76 70 104 M86 24 C92 52 80 74 88 106 M100 26 C94 50 104 78 98 104 M114 24 C120 50 110 76 118 106" fill="none" stroke="#1f3b33" stroke-width="1.4"/>`,
+  7: `${[18, 42, 66, 90, 114, 138].map((x) => post(x, 28, 78)).join("")}<path d="M12 48 C40 36 70 60 100 46 C124 36 140 52 152 44 M12 66 C40 54 70 78 100 64 C124 54 140 70 152 62 M12 84 C40 72 70 96 100 82 C124 72 140 88 152 80" fill="none" stroke="#1f3b33" stroke-width="3"/>`,
+  8: `${post(8)}${post(18)}${post(132)}${post(142)}<line x1="28" y1="108" x2="128" y2="18" stroke="#7c3a2d" stroke-width="4"/><line x1="28" y1="18" x2="128" y2="108" stroke="#5e584e" stroke-width="4"/><line x1="28" y1="64" x2="80" y2="18" stroke="#7c3a2d" stroke-width="4"/><line x1="70" y1="108" x2="128" y2="52" stroke="#5e584e" stroke-width="4"/><circle cx="21" cy="40" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="78" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/>`,
+  9: `${post(12)}${post(141)}${bar(30, 20, 120, 4)}${bar(96, 20, 120, 4)}${Array.from({ length: 14 }, (_, i) => `<rect x="${22 + i * 8}" y="24" width="8" height="84" fill="#${i % 2 ? "1c1916" : "3a342c"}"/>`).join("")}`,
+  10: `${post(12)}${post(141)}${bar(30, 20, 120, 4)}${bar(96, 20, 120, 4)}${Array.from({ length: 8 }, (_, i) => `<rect x="${24 + i * 15}" y="24" width="7" height="84" fill="#1c1916"/>`).join("")}`,
+  11: `${post(12)}${post(141)}${bar(20, 20, 120, 6)}${bar(78, 20, 120, 4)}${Array.from({ length: 9 }, (_, i) => `<rect x="${26 + i * 13}" y="40" width="8" height="68" fill="#5e584e"/>`).join("")}`,
+  12: `${post(16, 20, 90)}${post(137, 20, 90)}${bar(52, 16, 128, 5)}${Array.from({ length: 16 }, (_, i) => `<line x1="${28 + i * 7}" y1="36" x2="${30 + i * 7}" y2="100" stroke="#1f3b33" stroke-width="1.3"/>`).join("")}`,
+  13: `<ellipse cx="36" cy="72" rx="26" ry="34" fill="#1f3b33"/><ellipse cx="78" cy="64" rx="30" ry="40" fill="#2a5246"/><ellipse cx="118" cy="74" rx="24" ry="32" fill="#1f3b33"/>`,
+  14: `<line x1="8" y1="100" x2="152" y2="100" stroke="#d9d1c4" stroke-width="2"/>${[[28, 11], [58, 13], [88, 10], [114, 14], [140, 11]].map(([x, r]) => `<ellipse cx="${x}" cy="${98 - r * 0.7}" rx="${r}" ry="${r * 0.75}" fill="#5e584e"/>`).join("")}`,
+  15: `${[28, 78, 128].map((x) => `${post(x, 70, 40)}<line x1="${x}" y1="70" x2="${x - 8}" y2="46" stroke="#1c1916" stroke-width="3"/><line x1="${x + 7}" y1="70" x2="${x + 15}" y2="46" stroke="#1c1916" stroke-width="3"/>`).join("")}${bar(56, 16, 128, 5)}`,
+  16: `${post(12)}${post(141)}${bar(96, 20, 120, 4)}${boards(0, 22)}`,
+  17: `${post(14)}${post(139)}${bar(48)}${bar(70)}${bar(92)}<path d="M30 18 C48 40 40 28 60 44 M50 16 C70 36 64 22 88 40 M78 14 C96 38 90 20 118 42 M36 30 C58 18 80 34 110 16" fill="none" stroke="#1f3b33" stroke-width="1.3"/>`,
+  18: `${bar(58, 16, 128, 5)}${Array.from({ length: 12 }, (_, i) => { const x = 20 + i * 10; return `<polygon points="${x},108 ${x + 2},20 ${x + 6},20 ${x + 8},108" fill="#1c1916"/>`; }).join("")}`,
+};
+
+const tabs = document.querySelector("#fence-tabs");
+const list = document.querySelector("#fence-list");
+const card = (f) => {
+  const [k, ip, d, m, places] = copy[f.n];
+  const el = document.createElement("article");
+  el.className = "type";
+  el.id = "tips-" + f.n;
+  el.innerHTML = `<div class="type-head"><svg class="diagram" viewBox="0 0 160 120" aria-hidden="true">${diagrams[f.n]}</svg><div><p class="tip-n">${f.n}</p><h3>${f.name}</h3><p><b>Konstrukcija.</b> ${k}</p><p><b>Īpašības.</b> ${ip}</p><p><b>Darbs.</b> ${d}</p><p><b>Materiāli.</b> ${m}</p></div></div>`;
+  const box = document.createElement("div");
+  box.className = "carousel";
+  const fig = document.createElement("figure");
+  const img = document.createElement("img");
+  const cap = document.createElement("figcaption");
+  fig.append(img, cap);
+  box.append(fig);
+  let i = 0;
+  const show = () => {
+    const place = places[i];
+    img.src = `foto/zogi/${String(f.n).padStart(2, "0")}-${i + 1}.jpg`;
+    img.alt = `${f.name}, ${place}`;
+    cap.textContent = places.length > 1 ? `${place} · ${i + 1}/${places.length}` : place;
+  };
+  if (places.length > 1) {
+    [["prev", "Iepriekšējā", -1], ["next", "Nākamā", 1]].forEach(([cls, label, dir]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = cls;
+      b.setAttribute("aria-label", label);
+      b.textContent = dir < 0 ? "‹" : "›";
+      b.addEventListener("click", () => { i = (i + dir + places.length) % places.length; show(); });
+      box.append(b);
+    });
+  }
+  show();
+  el.append(box);
+  return el;
+};
+const cards = Object.fromEntries(fences.map((f) => [f.n, card(f)]));
+const showScheme = (id) => {
+  tabs.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.tab === id));
+  list.replaceChildren();
+  schemes[id].forEach(([title, note, ids]) => {
+    const h = document.createElement("h3");
+    h.className = "class-name";
+    h.textContent = title;
+    const p = document.createElement("p");
+    p.className = "note";
+    p.textContent = note;
+    list.append(h, p, ...ids.map((n) => cards[n]));
+  });
+};
+tabs.innerHTML = [["konstrukcija", "Konstrukcija"], ["darbs", "Darbs"], ["paņēmiens", "Paņēmiens"]].map(([id, name], i) => `<button type="button" data-tab="${id}"${i ? "" : ' class="on"'}>${name}</button>`).join("");
+tabs.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) showScheme(b.dataset.tab); });
+showScheme("konstrukcija");
+
+const index = document.querySelector("#fence-index");
+index.innerHTML = `<thead><tr><th>Nr.</th><th>Tips</th><th>Sēta</th></tr></thead><tbody>${fences.map((f) => `<tr data-n="${f.n}"><td>${f.n}</td><td>${f.name}</td><td>${[...new Set(copy[f.n][4])].join(", ")}</td></tr>`).join("")}</tbody>`;
+const showTip = (n) => {
+  const el = document.getElementById("tips-" + n);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  document.querySelectorAll(".type.on").forEach((node) => node.classList.remove("on"));
+  el.classList.add("on");
+};
+index.addEventListener("click", (e) => { const tr = e.target.closest("tr[data-n]"); if (tr) showTip(+tr.dataset.n); });
 
 const fenceBox = document.querySelector("#fence");
 const openFence = (f) => {
@@ -219,7 +358,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 fences.forEach((f) => {
   const icon = L.divIcon({ className: "", html: `<span class="pin">${f.n}</span>`, iconSize: [28, 28], iconAnchor: [14, 14] });
-  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.name}` }).addTo(map).on("click", () => openFence(f));
+  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.name}` }).addTo(map).on("click", () => showTip(f.n));
 });
 
 document.addEventListener("keydown", (e) => {
