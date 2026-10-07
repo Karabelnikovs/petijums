@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dižlīķu klēts · žogi un būvelementi</title>
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=13">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -24,13 +24,13 @@
     <h2 id="zogi">Žogi</h2>
     <p class="lead">18 tipi Brīvdabas muzejā. Trīs cilnes ir trīs kārtības: kā žogs ir salikts, kādu darbu tas dara, un ar ko tas ir būvēts. Cipars sakrīt ar karti.</p>
     <div class="tabs" id="fence-tabs"></div>
-    <table class="index" id="fence-index"></table>
     <div id="fence-list"></div>
 
 
     <h2 id="karte">Karte</h2>
     <p class="lead">18 žogu tipi Brīvdabas muzejā. Cipars ir numurs no kopsavilkuma. Karti var pietuvināt un attālināt.</p>
     <div id="map"></div>
+    <table class="index" id="fence-index"></table>
 
     <h2 id="elementi">Būvelementi</h2>
     <p class="lead">Viena ēka, piecas grupas. Kokam un akmenim rādām garumu, platumu un biezumu vai diametru. Laukums un tilpums ir tikai niedru jumtam. Ziemeļu fasāde ir četri posmi, 6 + 6 + 4 + 6 = 22 baļķi.</p>
@@ -184,14 +184,13 @@
       <button type="button" id="fence-x">Aizvērt</button>
       <p class="kicker" id="fence-type"></p>
       <h3 id="fence-title"></h3>
+      <div id="fence-text"></div>
       <p class="note" id="fence-where"></p>
-      <p id="fence-text"></p>
-      <p class="meta" id="fence-size"></p>
-      <img id="fence-img" alt="">
+      <div id="fence-photos"></div>
     </article>
   </div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="app.js?v=12"></script>
+  <script src="app.js?v=14"></script>
   <script type="module" src="house.js?v=4"></script>
 </body>
 </html>

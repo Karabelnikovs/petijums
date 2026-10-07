@@ -154,12 +154,12 @@ const closePhoto = () => {
 };
 
 document.addEventListener("click", (e) => {
-  const img = e.target.closest(".carousel img, .reed-grid img, #fence-img");
+  const img = e.target.closest(".carousel img, .reed-grid img");
   if (img) openPhoto(img);
 });
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Enter") return;
-  const img = e.target.closest?.(".carousel img, .reed-grid img, #fence-img");
+  const img = e.target.closest?.(".carousel img, .reed-grid img");
   if (img) openPhoto(img);
 });
 view.addEventListener("click", closePhoto);
@@ -254,28 +254,64 @@ const diagrams = {
   18: `${bar(58, 16, 128, 5)}${Array.from({ length: 12 }, (_, i) => { const x = 20 + i * 10; return `<polygon points="${x},108 ${x + 2},20 ${x + 6},20 ${x + 8},108" fill="#1c1916"/>`; }).join("")}`,
 };
 
-const tabs = document.querySelector("#fence-tabs");
-const list = document.querySelector("#fence-list");
-const card = (f) => {
-  const [k, ip, d, m, places] = copy[f.n];
-  const el = document.createElement("article");
-  el.className = "type";
-  el.id = "tips-" + f.n;
-  el.innerHTML = `<div class="type-head"><svg class="diagram" viewBox="0 0 160 120" aria-hidden="true">${diagrams[f.n]}</svg><div><p class="tip-n">${f.n}</p><h3>${f.name}</h3><p><b>Konstrukcija.</b> ${k}</p><p><b>Īpašības.</b> ${ip}</p><p><b>Darbs.</b> ${d}</p><p><b>Materiāli.</b> ${m}</p></div></div>`;
+const srcOf = (n, i) => `foto/zogi/${String(n).padStart(2, "0")}-${i + 1}.jpg`;
+const focus = {
+  konstrukcija: [0, "Konstrukcija", 1, "Īpašības"],
+  darbs: [2, "Darbs", 0, "Konstrukcija"],
+  paņēmiens: [3, "Materiāli", 0, "Konstrukcija"],
+};
+let tab = "konstrukcija";
+
+const carousel = (n, name, places) => {
   const box = document.createElement("div");
   box.className = "carousel";
-  const fig = document.createElement("figure");
+  const frame = document.createElement("div");
+  frame.className = "frame";
   const img = document.createElement("img");
   const cap = document.createElement("figcaption");
-  fig.append(img, cap);
-  box.append(fig);
+  frame.append(img);
+  box.append(frame, cap);
   let i = 0;
-  const show = () => {
-    const place = places[i];
-    img.src = `foto/zogi/${String(f.n).padStart(2, "0")}-${i + 1}.jpg`;
-    img.alt = `${f.name}, ${place}`;
-    cap.textContent = places.length > 1 ? `${place} · ${i + 1}/${places.length}` : place;
+  let busy = false;
+  const capOf = (j) => places.length > 1 ? `${places[j]} · ${j + 1}/${places.length}` : places[j];
+  const still = (j) => {
+    img.style.transition = "none";
+    img.style.transform = "none";
+    img.src = srcOf(n, j);
+    img.alt = `${name}, ${places[j]}`;
+    cap.textContent = capOf(j);
+    void img.offsetWidth;
+    img.style.transition = "";
   };
+  const go = (dir) => {
+    if (busy) return;
+    busy = true;
+    const j = (i + dir + places.length) % places.length;
+    const next = document.createElement("img");
+    next.src = srcOf(n, j);
+    next.alt = `${name}, ${places[j]}`;
+    next.style.transition = "none";
+    next.style.transform = `translateX(${dir > 0 ? "100%" : "-100%"})`;
+    frame.append(next);
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      i = j;
+      next.remove();
+      still(j);
+      busy = false;
+    };
+    next.addEventListener("transitionend", (e) => {
+      if (e.target === next && e.propertyName === "transform") finish();
+    });
+    void next.offsetWidth;
+    next.style.transition = "";
+    img.style.transform = `translateX(${dir > 0 ? "-100%" : "100%"})`;
+    next.style.transform = "translateX(0)";
+    setTimeout(finish, 520);
+  };
+  still(0);
   if (places.length > 1) {
     [["prev", "Iepriekšējā", -1], ["next", "Nākamā", 1]].forEach(([cls, label, dir]) => {
       const b = document.createElement("button");
@@ -283,56 +319,80 @@ const card = (f) => {
       b.className = cls;
       b.setAttribute("aria-label", label);
       b.textContent = dir < 0 ? "‹" : "›";
-      b.addEventListener("click", () => { i = (i + dir + places.length) % places.length; show(); });
-      box.append(b);
+      b.addEventListener("click", () => go(dir));
+      frame.append(b);
     });
   }
-  show();
-  el.append(box);
+  return box;
+};
+
+const tabs = document.querySelector("#fence-tabs");
+const list = document.querySelector("#fence-list");
+const card = (f) => {
+  const el = document.createElement("article");
+  el.className = "type";
+  el.id = "tips-" + f.n;
+  el.innerHTML = `<div class="type-head"><svg class="diagram" viewBox="0 0 160 120" aria-hidden="true">${diagrams[f.n]}</svg><div><p class="tip-n">${f.n}</p><h3>${f.name}</h3><p class="role"></p><p class="body"></p><p class="extra"></p></div></div>`;
+  el.append(carousel(f.n, f.name, copy[f.n][4]));
   return el;
 };
 const cards = Object.fromEntries(fences.map((f) => [f.n, card(f)]));
-const showScheme = (id) => {
-  tabs.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.tab === id));
-  list.replaceChildren();
-  schemes[id].forEach(([title, note, ids]) => {
-    const h = document.createElement("h3");
-    h.className = "class-name";
-    h.textContent = title;
-    const p = document.createElement("p");
-    p.className = "note";
-    p.textContent = note;
-    list.append(h, p, ...ids.map((n) => cards[n]));
-  });
+const groupOf = (n) => schemes[tab].find((g) => g[2].includes(n));
+const paint = (n) => {
+  const el = cards[n];
+  const [a, la, b, lb] = focus[tab];
+  const text = copy[n];
+  el.querySelector(".role").textContent = groupOf(n)[0];
+  el.querySelector(".body").innerHTML = `<b>${la}.</b> ${text[a]}`;
+  el.querySelector(".extra").innerHTML = `<b>${lb}.</b> ${text[b]}`;
+};
+const showScheme = (id, animate) => {
+  const run = () => {
+    tab = id;
+    tabs.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.tab === id));
+    list.replaceChildren();
+    schemes[id].forEach(([title, note, ids]) => {
+      ids.forEach(paint);
+      const h = document.createElement("h3");
+      h.className = "class-name";
+      h.textContent = title;
+      const p = document.createElement("p");
+      p.className = "note";
+      p.textContent = note;
+      list.append(h, p, ...ids.map((n) => cards[n]));
+    });
+    list.classList.remove("swap");
+  };
+  if (!animate) { run(); return; }
+  list.classList.add("swap");
+  setTimeout(run, 160);
 };
 tabs.innerHTML = [["konstrukcija", "Konstrukcija"], ["darbs", "Darbs"], ["paņēmiens", "Paņēmiens"]].map(([id, name], i) => `<button type="button" data-tab="${id}"${i ? "" : ' class="on"'}>${name}</button>`).join("");
-tabs.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) showScheme(b.dataset.tab); });
+tabs.addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (b && b.dataset.tab !== tab) showScheme(b.dataset.tab, true);
+});
 showScheme("konstrukcija");
 
 const index = document.querySelector("#fence-index");
 index.innerHTML = `<thead><tr><th>Nr.</th><th>Tips</th><th>Sēta</th></tr></thead><tbody>${fences.map((f) => `<tr data-n="${f.n}"><td>${f.n}</td><td>${f.name}</td><td>${[...new Set(copy[f.n][4])].join(", ")}</td></tr>`).join("")}</tbody>`;
-const showTip = (n) => {
-  const el = document.getElementById("tips-" + n);
-  if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "center" });
-  document.querySelectorAll(".type.on").forEach((node) => node.classList.remove("on"));
-  el.classList.add("on");
-};
-index.addEventListener("click", (e) => { const tr = e.target.closest("tr[data-n]"); if (tr) showTip(+tr.dataset.n); });
 
 const fenceBox = document.querySelector("#fence");
 const openFence = (f) => {
-  document.querySelector("#fence-type").textContent = "";
+  const [k, ip, d, m, places] = copy[f.n];
+  document.querySelector("#fence-type").textContent = groupOf(f.n)[0];
   document.querySelector("#fence-title").textContent = `${f.n} · ${f.name}`;
-  document.querySelector("#fence-where").textContent = "";
-  document.querySelector("#fence-text").textContent = "";
-  document.querySelector("#fence-size").textContent = "";
-  const img = document.querySelector("#fence-img");
-  img.hidden = true;
+  document.querySelector("#fence-text").innerHTML = `<p><b>Konstrukcija.</b> ${k}</p><p><b>Īpašības.</b> ${ip}</p><p><b>Darbs.</b> ${d}</p><p><b>Materiāli.</b> ${m}</p>`;
+  document.querySelector("#fence-where").textContent = [...new Set(places)].join(", ");
+  document.querySelector("#fence-photos").replaceChildren(carousel(f.n, f.name, places));
   fenceBox.hidden = false;
   pageLock();
   requestAnimationFrame(() => fenceBox.classList.add("on"));
 };
+index.addEventListener("click", (e) => {
+  const tr = e.target.closest("tr[data-n]");
+  if (tr) openFence(fences.find((f) => f.n === +tr.dataset.n));
+});
 const closeFence = () => {
   if (fenceBox.hidden) return;
   fenceBox.classList.remove("on");
@@ -358,7 +418,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 fences.forEach((f) => {
   const icon = L.divIcon({ className: "", html: `<span class="pin">${f.n}</span>`, iconSize: [28, 28], iconAnchor: [14, 14] });
-  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.name}` }).addTo(map).on("click", () => showTip(f.n));
+  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.name}` }).addTo(map).on("click", () => openFence(f));
 });
 
 document.addEventListener("keydown", (e) => {
