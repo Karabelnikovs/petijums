@@ -161,27 +161,35 @@ document.querySelectorAll(".photos img, .reed-grid img, #fence-img").forEach((im
 view.addEventListener("click", closePhoto);
 
 const fences = [
-  { n: 1, lat: 56.9936, lng: 24.2702, place: "Kauguri, jūra", region: "Kurzeme", type: "Zedeņu žogs", text: "Zari pīti stāvus starp horizontālām kārtīm.", size: "žogs 1300 mm · stabi 1580 mm", img: "foto/01-kaugari.JPG", alt: "Pīts zedeņu žogs, Kauguri" },
-  { n: 9, lat: 56.9910, lng: 24.2730, place: "Kuldīga", region: "Kurzeme", type: "Kāršu žogs", text: "Trīs tievākas kārtis uz mietiem, caurredzams.", size: "žogs 1000 mm · stabi 1250 mm", img: "foto/09-kuldiga.JPG", alt: "Kāršu žogs, Kuldīga" },
-  { n: 2, lat: 56.9934, lng: 24.2812, place: "Krāslava", region: "Latgale", type: "Guļbaļķu žogs", text: "Resni apaļkoki starp zemē ieraktiem stabiem.", size: "žogs 1300 mm · stabi 1670 mm", img: "foto/02-kraslava.JPG", alt: "Guļbaļķu žogs, Krāslava" },
-  { n: 4, lat: 56.9918, lng: 24.2802, place: "Krāslava, aile", region: "Latgale", type: "Guļbaļķu žogs", text: "Horizontālu baļķu pildījums ailē pie guļbūves.", size: "žogs 1800 mm", img: "foto/04-kraslava.JPG", alt: "Baļķu pildījums ailē, Krāslava" },
-  { n: 3, lat: 56.9926, lng: 24.2832, place: "Krāslava", region: "Latgale", type: "Stāvžogs", text: "Blīvi vertikāli mieti ar smailiem galiem, nagloti pie šķērskokiem.", size: "žogs 1860 mm", img: "foto/03-kraslava.png", alt: "Stāvžogs, Krāslava" },
-  { n: 5, lat: 56.9904, lng: 24.2844, place: "Rudzāti", region: "Latgale", type: "Stāvžogs", text: "Vertikālas latas ar atstarpēm un smailiem galiem.", size: "žogs 1750 mm", img: "foto/05-rudzati.JPG", alt: "Stāvžogs, Rudzāti" },
-  { n: 6, lat: 56.9944, lng: 24.2852, place: "Latgale, vārti", region: "Latgale", type: "Stāvžogs", text: "Dēļu vārti. Tā pati būve kā stāvžogam, tikai rūpīgāka aile.", size: "žogs 1430 mm · stabi 2000 mm", img: "foto/06-latgale.JPG", alt: "Dēļu vārti, Latgale" },
-  { n: 7, lat: 56.9892, lng: 24.2796, place: "Pasiena, vārti", region: "Latgale", type: "Stāvžogs", text: "Dēļu vārti starp stāvžoga posmiem.", size: "žogs 1530 mm · stabi 2100 mm", img: "foto/07-pasiena.JPG", alt: "Dēļu vārti, Pasiena" },
-  { n: 8, lat: 56.9886, lng: 24.2816, place: "Pasiena, dārzs", region: "Latgale", type: "Stāvžogs", text: "Zems žogs ap puķēm. Konstrukcija ir stāvžogs, darbs ir sargāt stādījumu.", size: "žogs 850 mm", img: "foto/08-pasiena.JPG", alt: "Zems dārza žogs, Pasiena" },
+  { n: 1, lat: 56.991742, lng: 24.276381, name: "Stabu kāršu kaltos caurumos" },
+  { n: 2, lat: 56.993006, lng: 24.274775, name: "Stabu kāršu gropēs ar atstarpi" },
+  { n: 3, lat: 56.987929, lng: 24.280367, name: "Stabu kāršu gropēs bez atstarpes" },
+  { n: 4, lat: 56.988283, lng: 24.280429, name: "Stabu kāršu pāra stabiem piesietas" },
+  { n: 5, lat: 56.987652, lng: 24.281588, name: "Stabu kāršu pāra stabi atstutēti starp" },
+  { n: 6, lat: 56.991357, lng: 24.276652, name: "Zedeņu vertikāli" },
+  { n: 7, lat: 56.991845, lng: 24.268472, name: "Zedeņu horizontāli" },
+  { n: 8, lat: 56.989095, lng: 24.278830, name: "Vilku žogs" },
+  { n: 9, lat: 56.988742, lng: 24.279158, name: "Dēļu bez atstarpes" },
+  { n: 10, lat: 56.988417, lng: 24.278948, name: "Dēļu ar atstarpi" },
+  { n: 11, lat: 56.990551, lng: 24.279517, name: "Kāršu-dēļu ar naglām" },
+  { n: 12, lat: 56.989586, lng: 24.283857, name: "Pienagloti zari" },
+  { n: 13, lat: 56.989619, lng: 24.284726, name: "Dzīvžogs" },
+  { n: 14, lat: 56.991033, lng: 24.267983, name: "Akmeņu žogs" },
+  { n: 15, lat: 56.987935, lng: 24.280603, name: "Šķeltu koku žogs" },
+  { n: 16, lat: 56.987856, lng: 24.280523, name: "Dēļu bez atstarpes ar formu" },
+  { n: 17, lat: 56.987191, lng: 24.281521, name: "Stabu kāršu ar brīvpieejamiem zariem" },
+  { n: 18, lat: 56.988785, lng: 24.279007, name: "Stāvžogs" },
 ];
 
 const fenceBox = document.querySelector("#fence");
 const openFence = (f) => {
-  document.querySelector("#fence-type").textContent = f.type;
-  document.querySelector("#fence-title").textContent = `${f.n} · ${f.place}`;
-  document.querySelector("#fence-where").textContent = f.region;
-  document.querySelector("#fence-text").textContent = f.text;
-  document.querySelector("#fence-size").textContent = f.size;
+  document.querySelector("#fence-type").textContent = "";
+  document.querySelector("#fence-title").textContent = `${f.n} · ${f.name}`;
+  document.querySelector("#fence-where").textContent = "";
+  document.querySelector("#fence-text").textContent = "";
+  document.querySelector("#fence-size").textContent = "";
   const img = document.querySelector("#fence-img");
-  img.src = f.img;
-  img.alt = f.alt;
+  img.hidden = true;
   fenceBox.hidden = false;
   pageLock();
   requestAnimationFrame(() => fenceBox.classList.add("on"));
@@ -198,32 +206,6 @@ fenceBox.addEventListener("click", closeFence);
 fenceBox.querySelector("article").addEventListener("click", (e) => e.stopPropagation());
 document.querySelector("#fence-x").addEventListener("click", closeFence);
 
-const kinds = [
-  [1, "Stabu kāršu kaltos caurumos"],
-  [2, "Stabu kāršu gropēs ar atstarpi"],
-  [3, "Stabu kāršu gropēs bez atstarpes"],
-  [4, "Stabu kāršu pāra stabiem piesietas"],
-  [5, "Stabu kāršu pāra stabi atstutēti starp"],
-  [6, "Zedeņu vertikāli"],
-  [7, "Zedeņu horizontāli"],
-  [8, "Vilku žogs"],
-  [9, "Dēļu bez atstarpes"],
-  [10, "Dēļu ar atstarpi"],
-  [11, "Kāršu-dēļu ar naglām"],
-  [12, "Pienagloti zari"],
-  [13, "Dzīvžogs"],
-  [14, "Akmeņu žogs"],
-  [15, "Šķeltu koku žogs"],
-  [16, "Dēļu bez atstarpes ar formu"],
-  [17, "Stabu kāršu ar brīvpieejamiem zariem"],
-  [18, "Stāvžogs"],
-].map(([n, name], i) => ({ n, name, lat: 56.9956 - (i % 9) * 0.00105, lng: 24.2682 + Math.floor(i / 9) * 0.0022 }));
-const saved = JSON.parse(localStorage.getItem("fence-places") || "null");
-if (Array.isArray(saved)) saved.forEach((s) => {
-  const k = kinds.find((item) => item.n === s.n);
-  if (k && Number.isFinite(s.lat) && Number.isFinite(s.lng)) { k.lat = s.lat; k.lng = s.lng; }
-});
-
 const map = L.map("map", {
   scrollWheelZoom: true,
   minZoom: 14,
@@ -235,47 +217,9 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
 }).addTo(map);
 
-const markers = {};
-let selected = 0;
-const list = document.querySelector("#place-list");
-const savePlaces = () => localStorage.setItem("fence-places", JSON.stringify(kinds.map(({ n, lat, lng }) => ({ n, lat, lng }))));
-const drawList = () => {
-  list.innerHTML = "";
-  kinds.forEach((k) => {
-    const li = document.createElement("li");
-    if (k.n === selected) li.className = "on";
-    li.textContent = `${k.n} ${k.name} · ${k.lat.toFixed(5)}, ${k.lng.toFixed(5)}`;
-    li.addEventListener("click", () => {
-      selected = k.n;
-      map.setView([k.lat, k.lng], Math.max(map.getZoom(), 18));
-      drawList();
-      paintPins();
-    });
-    list.append(li);
-  });
-};
-const paintPins = () => document.querySelectorAll("#map .pin").forEach((el) => el.classList.toggle("on", +el.textContent === selected));
-kinds.forEach((k) => {
-  const icon = L.divIcon({ className: "", html: `<span class="pin">${k.n}</span>`, iconSize: [28, 28], iconAnchor: [14, 14] });
-  const marker = L.marker([k.lat, k.lng], { icon, draggable: true, autoPan: true, title: `${k.n} ${k.name}` }).addTo(map);
-  marker.on("dragstart", () => { selected = k.n; paintPins(); });
-  marker.on("dragend", () => {
-    const p = marker.getLatLng();
-    k.lat = p.lat;
-    k.lng = p.lng;
-    savePlaces();
-    drawList();
-    paintPins();
-  });
-  markers[k.n] = marker;
-});
-drawList();
-document.querySelector("#place-copy").addEventListener("click", async () => {
-  const text = kinds.map((k) => `${k.n}\t${k.lat.toFixed(6)}\t${k.lng.toFixed(6)}\t${k.name}`).join("\n");
-  try { await navigator.clipboard.writeText(text); }
-  catch { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
-  document.querySelector("#place-copy").textContent = "Nokopēts";
-  setTimeout(() => { document.querySelector("#place-copy").textContent = "Kopēt koordinātas"; }, 1200);
+fences.forEach((f) => {
+  const icon = L.divIcon({ className: "", html: `<span class="pin">${f.n}</span>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.name}` }).addTo(map).on("click", () => openFence(f));
 });
 
 document.addEventListener("keydown", (e) => {

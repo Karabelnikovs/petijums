@@ -115,15 +115,9 @@ h3 { font-size: 26px; margin: 0 0 8px; }
   color: var(--paper);
   font: 600 13px/24px "Avenir Next", sans-serif;
   text-align: center;
-  cursor: grab;
+  cursor: pointer;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
-.pin.on { background: var(--ink); }
-.place { margin-top: 12px; }
-.place button { border: 1px solid var(--line); background: var(--paper); font: inherit; padding: 4px 12px; cursor: pointer; }
-.place ul { columns: 2; margin: 10px 0 0; padding: 0; list-style: none; font-size: 14px; }
-.place li { break-inside: avoid; padding: 3px 0; cursor: pointer; }
-.place li.on { color: var(--rust); }
 #fence {
   position: fixed;
   inset: 0;
