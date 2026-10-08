@@ -274,16 +274,24 @@ ruler.addEventListener("keydown", (e) => {
   ticks[n].focus();
 });
 
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+let playAt = 0;
 playBtn.addEventListener("click", async () => {
-  if (playBtn.classList.contains("on")) { playToken++; setPlay(false); return; }
+  if (playBtn.classList.contains("on")) {
+    if (performance.now() - playAt < 500) return;
+    playToken++;
+    setPlay(false);
+    return;
+  }
+  playAt = performance.now();
   const token = ++playToken;
   setPlay(true);
   show(-1, true);
-  await new Promise((r) => setTimeout(r, calm ? 0 : 420));
+  await wait(420);
   for (let s = 0; s <= 10; s++) {
     if (token !== playToken) return;
-    show(s, false);
-    await new Promise((r) => setTimeout(r, calm ? 0 : 1320));
+    show(s, calm);
+    await wait(1320);
   }
   if (token === playToken) setPlay(false);
 });

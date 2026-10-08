@@ -27,6 +27,7 @@ const rows = [
   { id: 27, group: "Jumts", name: "Apakšējie spārneši", n: 4, L: 4820, D: 130, mat: "apaļkoks" },
   { id: 23, group: "Pamati", name: "Pamata baļķis", n: 7, L: 10600, W: 260, T: 200, mat: "koks" },
   { id: 31, group: "Pamati", name: "Balstenis", n: 10, L: 400, W: 400, T: 150, mat: "koks" },
+  { id: 32, group: "Pamati", name: "Arka", n: 10, L: 400, W: 400, T: 150, mat: "koks" },
   { id: 11, group: "Pamati", name: "Akmeņi perimetrā", n: 27, L: 400, W: 350, T: 150, mat: "akmens" },
 ];
 
