@@ -666,6 +666,7 @@ h3 {
 }
 .house-frame {
   position: relative;
+  overflow: hidden;
   padding: 7px;
   background: linear-gradient(180deg, #efe6d6, #e3d5c0);
   border: 1px solid #c3b49c;
@@ -734,6 +735,8 @@ h3 {
   opacity: 0;
 }
 .house-bar {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 8px 28px;
@@ -743,6 +746,9 @@ h3 {
 }
 #house-play {
   grid-row: span 2;
+  position: relative;
+  z-index: 1;
+  touch-action: manipulation;
   display: inline-flex;
   align-items: center;
   justify-content: center;

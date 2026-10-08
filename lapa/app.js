@@ -52,15 +52,15 @@ groups.forEach((g) => {
     const tr = document.createElement("tr");
     tr.className = "row";
     tr.innerHTML = `<td>${r.name}</td><td class="num">${r.n}</td><td class="size">${size(r)}</td><td class="mat">${material(r)}</td>`;
-    tr.addEventListener("click", () => select(r, tr));
+    tr.addEventListener("click", (ev) => select(r, tr, ev.isTrusted));
     tbody.append(tr);
   });
 });
 
-function select(e, tr) {
+function select(e, tr, fromUser) {
   document.querySelectorAll("tr.on").forEach((n) => n.classList.remove("on"));
   tr.classList.add("on");
-  if (window.matchMedia("(max-width: 800px)").matches) {
+  if (fromUser && window.matchMedia("(max-width: 800px)").matches) {
     document.querySelector("aside").scrollIntoView({ block: "nearest" });
   }
   document.querySelector("#pick").hidden = false;
