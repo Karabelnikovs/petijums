@@ -50,7 +50,7 @@ const fill = new THREE.DirectionalLight(0xe7d3b4, 0.72);
 scene.add(sun, fill);
 const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.88, metalness: 0 });
 
-const buf = await (await fetch("house.bin?v=3")).arrayBuffer();
+const buf = await (await fetch("house.bin?v=4")).arrayBuffer();
 const view = new DataView(buf);
 let o = 6;
 const count = view.getUint16(4, true);

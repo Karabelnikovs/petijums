@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dižlīķu klēts · žogi un būvelementi</title>
-  <link rel="stylesheet" href="style.css?v=23">
+  <link rel="stylesheet" href="style.css?v=24">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
         <a href="#zogi">
           <span>01 · Kartēšana</span>
           <b>Žogi muzejā</b>
-          <p>18 tipi Brīvdabas muzejā. Konstrukcija, darbs un paņēmiens. Cipars sakrīt ar karti.</p>
+          <p>18 tipi Brīvdabas muzejā. Konstrukcija, funkcija un paņēmiens. Cipars sakrīt ar karti.</p>
         </a>
         <a href="#elementi">
           <span>02 · Materiālu bibliotēka</span>
@@ -49,11 +49,19 @@
       <div class="atlas reveal">
         <h2 id="karte">Karte</h2>
         <p class="lead">18 žogu tipi Brīvdabas muzejā. Cipars ir numurs no kopsavilkuma. Karti var pietuvināt un attālināt.</p>
-        <div id="map"></div>
+        <div class="map-frame">
+          <div id="map"></div>
+          <p class="map-hint">Klikšķiniet uz cipara</p>
+        </div>
         <table class="index" id="fence-index"></table>
       </div>
       <section class="closing">
         <h2>Secinājumi</h2>
+        <p>Vernikulāru žogu konkstrukciju pētijums pat Latvijas teritorijas mērogā potenciāli var būt pārsteidzoši apjomīgs, ņemot
+        vērā individuālu gadījumu daudzumu. Jāņem vērā, ka tā paša iemesla dēļ arī rodas problemātika kodolīgi “grupēt” visus
+        gadījumus atsevišķās tehnikās. Žogu izgatavošanai visbiežāk tika izmantoti pārpaliku būvmateriāli pēc ēku būvniecības,
+        kas nozīmē, ka to izpildījums ir atkarīgs, gan no pieejamiem būvmateriāliem, gan no autora, bieži ierobežotas,
+        meistarības, gan no reģionālām un laika tendencēm.</p>
       </section>
     </section>
 
@@ -61,7 +69,7 @@
       <div class="study-head reveal">
         <p class="kicker">Otrais uzdevums</p>
         <h2 id="elementi">Būvelementi</h2>
-        <p class="lead">Viena ēka, piecas grupas. Kokam un akmenim rādām garumu, platumu un biezumu vai diametru. Laukums un tilpums ir tikai niedru jumtam. Ziemeļu fasāde ir četri posmi, 6 + 6 + 4 + 6 = 22 baļķi.</p>
+        <p class="lead">Viena ēka, piecas grupas. Kokam un akmenim rādām garumu, platumu un biezumu vai diametru. Laukums un tilpums ir tikai niedru jumtam. Klēts sastāv no priežu koka materiāliem, izņemot latas (egļu zari) un niedru jumts.</p>
       </div>
 
       <article class="reed reveal">
@@ -131,7 +139,7 @@
           </thead>
           <tbody id="body"></tbody>
         </table>
-        <p class="note">Augšējiem un apakšējiem spārnešiem nav garuma, slieksnim nav biezuma. Ēkas augstums tabulā ir 99 mm A pusē un 160 mm R pusē. Jumta augstums no zemes ir 2469 mm un 2560 mm. Ēkas augstuma skaitļus pirms slaida vajag pārbaudīt uz vietas.</p>
+        <p class="note">Ēkas augstums tabulā ir 99 mm A pusē un 160 mm R pusē. Jumta augstums no zemes ir 2469 mm un 2560 mm.</p>
       </div>
       <aside>
         <p id="empty" class="note">Uzspied uz rindas. Šķērsgriezums ir izmērītais platums un biezums, nevis atsevišķa baļķa portrets.</p>
@@ -233,7 +241,7 @@
     </article>
   </div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="app.js?v=20"></script>
-  <script type="module" src="house.js?v=6"></script>
+  <script src="app.js?v=21"></script>
+  <script type="module" src="house.js?v=7"></script>
 </body>
 </html>

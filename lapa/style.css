@@ -498,9 +498,12 @@ h3 {
 .closing h2 {
   margin: 0;
 }
+.map-frame {
+  position: relative;
+  margin-top: 16px;
+}
 #map {
   height: min(68vh, 560px);
-  margin-top: 16px;
   z-index: 0;
   isolation: isolate;
   border: 1px solid #c3b49c;
@@ -696,7 +699,8 @@ h3 {
 .house-frame.drag #house-view {
   cursor: grabbing;
 }
-.house-hint {
+.house-hint,
+.map-hint {
   position: absolute;
   z-index: 2;
   left: 50%;
@@ -715,7 +719,8 @@ h3 {
   animation: hint-in 0.7s 0.45s both;
   transition: opacity 0.45s ease;
 }
-.house-frame.used .house-hint {
+.house-frame.used .house-hint,
+.map-frame.used .map-hint {
   animation: none;
   opacity: 0;
 }
@@ -1103,6 +1108,7 @@ footer {
   .hero,
   .house,
   .house-hint,
+  .map-hint,
   .type,
   .pin,
   #house-play.on,
@@ -1159,7 +1165,8 @@ footer {
     grid-row: auto;
     justify-self: start;
   }
-  .house-hint {
+  .house-hint,
+  .map-hint {
     letter-spacing: 0.04em;
     font-size: 10px;
     white-space: normal;

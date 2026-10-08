@@ -8,9 +8,9 @@ const rows = [
   { id: 8, group: "Sienas", name: "Guļbaļķi, dienvidu fasāde", n: 18, L: 5300, W: 350, T: 160, mat: "koks" },
   { id: 9, group: "Sienas", name: "Baļķi starp telpām", n: 8, L: 5100, W: 160, T: 160, mat: "koks" },
   { id: 10, group: "Lievenis", name: "Dēļi, lieveņa grīda", n: 63, L: 1640, W: 150, T: 25, mat: "zāģēts koks" },
-  { id: 14, group: "Lievenis", name: "Lieveņa kolonnas", n: 6, L: 2000, W: 220, T: 150, mat: "koks" },
+  { id: 14, group: "Lievenis", name: "Lieveņa stabi", n: 6, L: 2000, W: 220, T: 150, mat: "koks" },
   { id: 29, group: "Lievenis", name: "Lieveņa sijas", n: 4, L: 1640, W: 160, T: 120, mat: "koks" },
-  { id: 30, group: "Lievenis", name: "Baļķi virs lieveņa kolonnām", n: 2, L: 10300, W: 320, T: 160, mat: "koks" },
+  { id: 30, group: "Lievenis", name: "Baļķi virs lieveņa stabiem", n: 2, L: 10300, W: 320, T: 160, mat: "koks" },
   { id: 12, group: "Lievenis", name: "Dēļi, lieveņa griesti", n: 26, L: 4200, W: 200, T: 40, mat: "zāģēts koks" },
   { id: 28, group: "Lievenis", name: "Slieksnis", n: 2, L: 900, W: 150, mat: "koks" },
   { id: 13, group: "Pārsegumi", name: "Dēļi, graudu klēts grīda", n: 18, L: 5100, W: 300, T: 25, mat: "zāģēts koks" },
@@ -213,7 +213,7 @@ const schemes = {
     ["Naglots pildījums", "Kārtis un nagla. Dēļi vai zari.", [9, 10, 11, 12, 16]],
     ["Bez kāršu rāmja", "Žogu tur stabi, akmeņi, augs vai zemē sprausti baļķi.", [8, 13, 14, 15, 18]],
   ],
-  darbs: [
+  funkcija: [
     ["Aizturēt lopus", "Ganības un sētas, no kurām lopi nedrīkst iziet.", [1, 2, 3, 4, 5, 8, 11, 17]],
     ["Norobežot teritoriju", "Robeža, ceļš vai kaimiņu sēta. Augsts pinums aiztur arī dzīvniekus.", [6, 7, 14, 18]],
     ["Sargāt dobes", "Zems žogs sētas iekšā.", [15]],
@@ -238,7 +238,13 @@ const diagrams = {
   5: `${post(2)}${post(22)}${post(131)}${post(151)}${[32, 58, 84].map((y) => `<rect x="9" y="${y + 6}" width="13" height="3" fill="#1c1916"/><rect x="138" y="${y + 6}" width="13" height="3" fill="#1c1916"/>`).join("")}${[32, 58, 84].map((y) => bar(y, 9, 142)).join("")}${post(2)}${post(22)}${post(131)}${post(151)}`,
   6: `${post(16, 16, 96)}${post(137, 16, 96)}${bar(34, 16, 128, 3)}${bar(62, 16, 128, 3)}${bar(90, 16, 128, 3)}<path d="M28 28 C34 48 26 70 32 100 M44 26 C38 50 48 72 42 104 M58 24 C64 50 52 74 60 106 M72 26 C66 48 76 76 70 104 M86 24 C92 52 80 74 88 106 M100 26 C94 50 104 78 98 104 M114 24 C120 50 110 76 118 106" fill="none" stroke="#1f3b33" stroke-width="1.4"/>`,
   7: `${[18, 42, 66, 90, 114, 138].map((x) => post(x, 28, 78)).join("")}<path d="M12 48 C40 36 70 60 100 46 C124 36 140 52 152 44 M12 66 C40 54 70 78 100 64 C124 54 140 70 152 62 M12 84 C40 72 70 96 100 82 C124 72 140 88 152 80" fill="none" stroke="#1f3b33" stroke-width="3"/>`,
-  8: `${post(8)}${post(18)}${post(132)}${post(142)}<line x1="28" y1="108" x2="128" y2="18" stroke="#7c3a2d" stroke-width="4"/><line x1="28" y1="18" x2="128" y2="108" stroke="#5e584e" stroke-width="4"/><line x1="28" y1="64" x2="80" y2="18" stroke="#7c3a2d" stroke-width="4"/><line x1="70" y1="108" x2="128" y2="52" stroke="#5e584e" stroke-width="4"/><circle cx="21" cy="40" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="78" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/>`,
+  8: `${post(8)}${post(18)}${post(132)}${post(142)}${[
+    [20, 14, 136, 62],
+    [20, 25, 136, 73],
+    [20, 36, 136, 84],
+    [20, 47, 136, 95],
+    [20, 58, 136, 106],
+  ].map(([x1, y1, x2, y2], i) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${i % 2 ? "#5e584e" : "#7c3a2d"}" stroke-width="4" stroke-linecap="round"/>`).join("")}<circle cx="21" cy="25" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="21" cy="47" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="73" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="95" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/>`,
   9: `${post(12)}${post(141)}${bar(30, 20, 120, 4)}${bar(96, 20, 120, 4)}${Array.from({ length: 14 }, (_, i) => `<rect x="${22 + i * 8}" y="24" width="8" height="84" fill="#${i % 2 ? "1c1916" : "3a342c"}"/>`).join("")}`,
   10: `${post(12)}${post(141)}${bar(30, 20, 120, 4)}${bar(96, 20, 120, 4)}${Array.from({ length: 8 }, (_, i) => `<rect x="${24 + i * 15}" y="24" width="7" height="84" fill="#1c1916"/>`).join("")}`,
   11: `${post(12)}${post(141)}${bar(20, 20, 120, 6)}${bar(78, 20, 120, 4)}${Array.from({ length: 9 }, (_, i) => `<rect x="${26 + i * 13}" y="40" width="8" height="68" fill="#5e584e"/>`).join("")}`,
@@ -254,7 +260,7 @@ const diagrams = {
 const srcOf = (n, i) => `foto/zogi/${String(n).padStart(2, "0")}-${i + 1}.jpg`;
 const focus = {
   konstrukcija: [0, "Konstrukcija", 1, "Īpašības"],
-  darbs: [2, "Darbs", 0, "Konstrukcija"],
+  funkcija: [2, "Funkcija", 0, "Konstrukcija"],
   paņēmiens: [3, "Materiāli", 0, "Konstrukcija"],
 };
 let tab = "konstrukcija";
@@ -367,7 +373,7 @@ const showScheme = (id, animate) => {
   list.classList.add("swap");
   setTimeout(run, 160);
 };
-tabs.innerHTML = [["konstrukcija", "Konstrukcija"], ["darbs", "Darbs"], ["paņēmiens", "Paņēmiens"]].map(([id, name], i) => `<button type="button" data-tab="${id}"${i ? "" : ' class="on"'}>${name}</button>`).join("");
+tabs.innerHTML = [["konstrukcija", "Konstrukcija"], ["funkcija", "Funkcija"], ["paņēmiens", "Paņēmiens"]].map(([id, name], i) => `<button type="button" data-tab="${id}"${i ? "" : ' class="on"'}>${name}</button>`).join("");
 tabs.addEventListener("click", (e) => {
   const b = e.target.closest("button");
   if (b && b.dataset.tab !== tab) showScheme(b.dataset.tab, true);
@@ -382,7 +388,7 @@ const openFence = (f) => {
   const [k, ip, d, m, places] = copy[f.n];
   document.querySelector("#fence-type").textContent = groupOf(f.n)[0];
   document.querySelector("#fence-title").textContent = `${f.n} · ${f.name}`;
-  document.querySelector("#fence-text").innerHTML = `<p><b>Konstrukcija.</b> ${k}</p><p><b>Īpašības.</b> ${ip}</p><p><b>Darbs.</b> ${d}</p><p><b>Materiāli.</b> ${m}</p>`;
+  document.querySelector("#fence-text").innerHTML = `<p><b>Konstrukcija.</b> ${k}</p><p><b>Īpašības.</b> ${ip}</p><p><b>Funkcija.</b> ${d}</p><p><b>Materiāli.</b> ${m}</p>`;
   document.querySelector("#fence-where").textContent = [...new Set(places)].join(", ");
   document.querySelector("#fence-photos").replaceChildren(carousel(f.n, f.name, places));
   fenceBox.hidden = false;
@@ -416,9 +422,13 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
 }).addTo(map);
 
+const mapFrame = document.querySelector(".map-frame");
 fences.forEach((f) => {
   const icon = L.divIcon({ className: "", html: `<span class="pin">${f.n}</span>`, iconSize: [28, 28], iconAnchor: [14, 14] });
-  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.name}` }).addTo(map).on("click", () => openFence(f));
+  L.marker([f.lat, f.lng], { icon, title: `${f.n} ${f.name}` }).addTo(map).on("click", () => {
+    mapFrame.classList.add("used");
+    openFence(f);
+  });
 });
 
 document.addEventListener("keydown", (e) => {
