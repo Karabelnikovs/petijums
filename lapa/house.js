@@ -186,19 +186,41 @@ const setPlay = (on) => {
 
 let drag = null;
 let touched = false;
+const pointers = new Map();
+let pinch = null;
 canvas.addEventListener("pointerdown", (e) => {
-  drag = { x: e.clientX, y: e.clientY, rotY, rotX };
+  pointers.set(e.pointerId, [e.clientX, e.clientY]);
   touched = true;
   intro = 0;
-  frameEl.classList.add("drag", "used");
+  frameEl.classList.add("used");
   canvas.setPointerCapture(e.pointerId);
+  if (pointers.size === 2) {
+    const [a, b] = [...pointers.values()];
+    pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), dist };
+    drag = null;
+    return;
+  }
+  drag = { x: e.clientX, y: e.clientY, rotY, rotX };
+  frameEl.classList.add("drag");
 });
 canvas.addEventListener("pointermove", (e) => {
+  if (pointers.has(e.pointerId)) pointers.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pinch && pointers.size === 2) {
+    const [a, b] = [...pointers.values()];
+    const d = Math.hypot(a[0] - b[0], a[1] - b[1]) || 1;
+    dist = Math.min(48, Math.max(3, pinch.dist * (pinch.d / d)));
+    return;
+  }
   if (!drag) return;
   rotY = drag.rotY + (e.clientX - drag.x) * 0.008;
   rotX = Math.max(-1.05, Math.min(1.15, drag.rotX + (e.clientY - drag.y) * 0.006));
 });
-const endDrag = () => { drag = null; frameEl.classList.remove("drag"); };
+const endDrag = (e) => {
+  pointers.delete(e.pointerId);
+  pinch = null;
+  drag = null;
+  frameEl.classList.remove("drag");
+};
 canvas.addEventListener("pointerup", endDrag);
 canvas.addEventListener("pointercancel", endDrag);
 canvas.addEventListener("wheel", (e) => {

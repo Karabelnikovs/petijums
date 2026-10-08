@@ -167,34 +167,34 @@ document.addEventListener("keydown", (e) => {
 view.addEventListener("click", closePhoto);
 
 const fences = [
-  { n: 1, lat: 56.991742, lng: 24.276381, name: "Stabu kāršu kaltos caurumos" },
-  { n: 2, lat: 56.993006, lng: 24.274775, name: "Stabu kāršu gropēs ar atstarpi" },
-  { n: 3, lat: 56.987929, lng: 24.280367, name: "Stabu kāršu gropēs bez atstarpes" },
-  { n: 4, lat: 56.988283, lng: 24.280429, name: "Stabu kāršu pāra stabiem piesietas" },
-  { n: 5, lat: 56.987652, lng: 24.281588, name: "Stabu kāršu pāra stabi atstutēti starpās" },
-  { n: 6, lat: 56.991357, lng: 24.276652, name: "Zedeņu vertikāli" },
-  { n: 7, lat: 56.991845, lng: 24.268472, name: "Zedeņu horizontāli" },
+  { n: 1, lat: 56.991742, lng: 24.276381, name: "Stabi un kārtis kaltos caurumos" },
+  { n: 2, lat: 56.993006, lng: 24.274775, name: "Stabi un kārtis gropēs ar atstarpi" },
+  { n: 3, lat: 56.987929, lng: 24.280367, name: "Stabi un kārtis gropēs bez atstarpsēm" },
+  { n: 4, lat: 56.988283, lng: 24.280429, name: "Pāra stabi un piesietas kārtis" },
+  { n: 5, lat: 56.987652, lng: 24.281588, name: "Pāra stabi un kārtis atstutētas starpās" },
+  { n: 6, lat: 56.991357, lng: 24.276652, name: "Vertikālo zedeņu žogs" },
+  { n: 7, lat: 56.991845, lng: 24.268472, name: "Horzintālo zedeņu žogs" },
   { n: 8, lat: 56.989095, lng: 24.278830, name: "Vilku žogs" },
-  { n: 9, lat: 56.988742, lng: 24.279158, name: "Dēļu bez atstarpes" },
-  { n: 10, lat: 56.988417, lng: 24.278948, name: "Dēļu ar atstarpi" },
-  { n: 11, lat: 56.990551, lng: 24.279517, name: "Kāršu-dēļu ar naglām" },
-  { n: 12, lat: 56.989586, lng: 24.283857, name: "Pienagloti zari" },
+  { n: 9, lat: 56.988742, lng: 24.279158, name: "Dēļu žogs bez atstarpēm" },
+  { n: 10, lat: 56.988417, lng: 24.278948, name: "Dēļu žogs ar atstarpēm" },
+  { n: 11, lat: 56.990551, lng: 24.279517, name: "Kāršu-dēļu naglots žogs" },
+  { n: 12, lat: 56.989586, lng: 24.283857, name: "Pienagloti zari žogam" },
   { n: 13, lat: 56.989619, lng: 24.284726, name: "Dzīvžogs" },
   { n: 14, lat: 56.991033, lng: 24.267983, name: "Akmeņu žogs" },
-  { n: 15, lat: 56.987935, lng: 24.280603, name: "Šķeltu koku žogs" },
-  { n: 16, lat: 56.987856, lng: 24.280523, name: "Dēļu bez atstarpes ar formu" },
-  { n: 17, lat: 56.987191, lng: 24.281521, name: "Stabu kāršu ar brīvpieejamiem zariem" },
+  { n: 15, lat: 56.987935, lng: 24.280603, name: "Šķeltu zaru žogs" },
+  { n: 16, lat: 56.987856, lng: 24.280523, name: "Dēļu bez atstarpes ar dekoratīvu formu" },
+  { n: 17, lat: 56.987191, lng: 24.281521, name: "Stabu un kāršu žogs ar brīvpieejamiem zariem" },
   { n: 18, lat: 56.988785, lng: 24.279007, name: "Stāvžogs" },
 ];
 
 const copy = {
-  1: ["Stabi ierakti zemē. Katrā kalti caurumi, un horizontālās kārtis izvilktas tiem cauri. Posms starp stabiem ir līdz aptuveni 6,5 m.", "No koka, ko neizmantoja ēkām: šķībi, zaraini stabi un tievāki mieti kārtīm. Kārtis ir ievietotas caurumos.", "Biežāk ganību robeža vai sētas mala, lai lopi neizietu. Retāk tikai vizuāla teritorijas nodaļošana.", "Visbiežāk egle un priede. Kārtis ir apaļkoks, nevis zāģēts dēlis.", ["Vidzemes zemnieka sēta"]],
+  1: ["Stabi ierakti zemē. Katrā kalti caurumi, un horizontālās kārtis izvilktas tiem cauri. Posms starp stabiem ir līdz aptuveni 6,5 m.", "No koka, ko neizmantoja ēkām: šķībi, zaraini stabi un tievāki zari kārtīm. Kārtis ir ievietotas caurumos.", "Biežāk ganību robeža vai sētas mala, lai lopi neizietu. Retāk tikai vizuāla teritorijas nodaļošana.", "Visbiežāk egle un priede. Kārtis ir apaļkoks, nevis zāģēts dēlis.", ["Vidzemes zemnieka sēta"]],
   2: ["Stabi zemē ar gropēm. Kārtis ieliktas gropēs, un atstarpi starp tām tur klucīši.", "Spraugu var mainīt, liekot dažāda izmēra klucīšus. Tas pats pārpalikumu koks, kas caurumu žogam, tikai savienojums ir grope.", "Aiztur lopus. Caur redzamo spraugu nelaiž lielākus dzīvniekus, bet žogs paliek caurredzams.", "Egle un priede. Klucīši ir īsi koka gabali starp kārtīm.", ["Kurzemes zemnieka sēta", "Zemgale", "Kurzemes zvejnieku ciems"]],
-  3: ["Tās pašas gropes stabos, bet kārtis liktas cieši cita virs citas, bez klucīšiem un bez atstarpes.", "Blīvāks par caurumu žogu un par gropju žogu ar klucīšiem. Koks joprojām ir pārpalikumi, nevis zāģēti dēļi.", "Aiztur lopus. Caur žogu neredz, tāpēc tas nodala arī skatu.", "Egle un priede.", ["Krāslava"]],
+  3: ["Tās pašas gropes stabos, bet kārtis liktas cieši cita virs citas, bez klucīšiem un bez atstarpēm.", "Blīvāks par caurumu žogu un par gropju žogu ar klucīšiem. Koks joprojām ir pārpalikumi, nevis zāģēti dēļi.", "Aiztur lopus. Caur žogu neredz, tāpēc tas nodala arī skatu.", "Egle un priede.", ["Krāslava"]],
   4: ["Kārtis nav kaltas caur stabu. Tās stāv starp pāra stabiem un ir piesietas pie tiem.", "Savienojums ir saite, nevis caurums vai grope. Stabu pāris satur kārts galu no abām pusēm.", "Aiztur lopus, tāpat kā pārējie stabu un kāršu žogi.", "Koks un sējums. Saite ir no klūgām, nevis nagla.", ["Latgale"]],
   5: ["Pāra stabi. Kārtis neiet caur stabu, bet guļ uz horizontāla šķērskoka starp tiem.", "Kārtis balstās uz šķērskoka, tāpēc tās var nomainīt, nekalot jaunu caurumu. Pāris ir kā piesietajam žogam, bet bez saites ap kārti.", "Aiztur lopus.", "Egle un priede. Šķērskoks ir tas pats apaļkoks.", ["Latgales ciems", "Latgale"]],
-  6: ["Tas pats stabu un kāršu rāmis: stabi zemē, horizontālas kārtis caurumos vai gropēs. Gar kārtīm stāvus izlocīti tievāki zari.", "Blīvāka alternatīva kāršu žogam, kad vajag slēgtāku sienu. No pārpalikumiem: resnie baļķi stabiem, tievie zari pildījumam. Augstums mainās pēc darba.", "Norobežo zemi. Ja pinums ir augsts, aiztur arī dzīvniekus.", "Priede, egle, bērzs. Pildījums ir zari, nevis dēļi.", ["Vidzemes sēta", "Latgales ciems", "Latgales podnieka sēta"]],
-  7: ["Zari pīti guļus starp vertikāliem mietiem. Pinuma virziens ir pretējs vertikālajam zedeņam.", "Zemāks pinums. Materiāls tas pats, kas vertikālajam: pārpalikumi pēc ēku būves.", "Norobežo zemi. Augstums nosaka, vai žogs aiztur arī dzīvniekus.", "Priede, egle, bērzs.", ["Kurzemes zvejnieku ciems"]],
+  6: ["Tas pats stabu un kāršu rāmis: stabi zemē, horizontālas kārtis caurumos vai gropēs. Gar kārtīm stāvus izlocīti tievāki zari.", "Blīvāka alternatīva kāršu žogam, kad vajag slēgtāku sienu. No pārpalikumiem: resnie baļķi stabiem, tievie zari pildījumam. Augstums mainās atkarībā no funkcijas.", "Norobežo zemi. Ja pinums ir augsts, aiztur arī dzīvniekus.", "Priede, egle, bērzs. Pildījums ir zari, nevis dēļi.", ["Vidzemes sēta", "Latgales ciems", "Latgales podnieka sēta"]],
+  7: ["Zari pīti guļus starp vertikālām kārtīm. Pinuma virziens ir pretējs vertikālajam zedeņam.", "Zemāks pinums. Materiāls tas pats, kas vertikālajam: pārpalikumi pēc ēku būves.", "Norobežo zemi. Augstums nosaka, vai žogs aiztur arī dzīvniekus.", "Priede, egle, bērzs.", ["Kurzemes zvejnieku ciems"]],
   8: ["Pāra stabi. Starp tiem baļķi likti slīpi un piesieti pie stabiem. Nav horizontālu kāršu rāmja.", "Pietiek ar cirvi. Vajag daudz atzarota koka. Muzejā ir viens šāds žogs.", "Dzīvnieku aizturēšanai.", "Egle. Sējums no klūgām, lazdas vai bērza. Savienojums ir saite, nevis nagla.", ["Latgales ciems", "Latgales ciems", "Latgales ciems"]],
   9: ["Starp zemē dzītiem stabiem kārtis, pie tām pienagloti plati dēļi cieši viens pie otra.", "Biežāk Latgalē, kur ceļa malā žogs bija obligāts. No 18. gs., vispirms muižās, vēlāk zemnieku sētās, kad ir nagla un zāģēts dēlis.", "Iezīmē teritoriju, dod privātumu un izskatu.", "Visbiežāk egles vai priedes dēļi.", ["Latgale"]],
   10: ["Tā pati naglotā konstrukcija, bet dēļi šaurāki un starp tiem atstāta sprauga.", "Sprauga ir daļa no izskata, nevis klucītis kā kāršu žogā. Savienojums ir nagla, nevis grope.", "Iezīmē teritoriju un sakārto pagalmu. Caur spraugu redz, tāpēc privātums ir mazāks nekā blīvajam dēļu žogam.", "Egles vai priedes dēļi.", ["Latgale"]],
@@ -202,17 +202,17 @@ const copy = {
   12: ["Šauri zari pienagloti pie horizontālas kārts starp stabiem. Nav zāģētu dēļu.", "Nagla tur zarus, tāpēc tas ir naglotais žogs, nevis pinums. Zari ir pārpalikums dēļa vietā.", "Iezīmē teritoriju un dod izskatu, līdzīgi dēļu žogam, bet siena nav blīva.", "Zari, naglas un kārts. Nav zāģēta dēļa.", ["Jaunsaimniecība"]],
   13: ["Rindā audzēts un apgriezts krūmu vainags, kas veido garenu sienu. Nav stabu un kāršu.", "Pilnīgi dzīvs. Formu uztur, regulāri apgriežot.", "Dekoratīvs. Retāk to lieto zemes norobežošanai.", "Krūmi un koki ar blīvu vainagu, piemēram tūjas.", ["Jaunsaimniecība"]],
   14: ["Lieli akmeņi brīvi rindā, bez javas un bez koka rāmja.", "Piejūrā, kur akmeņu daudz un koka maz. Vēsturiskās sētās Latvijā rets.", "Vienīgais darbs ir atdalīt sētu no blakus sētas.", "Lieli akmeņi.", ["Kurzemes zvejnieku ciems", "Kurzemes zvejnieku ciems"]],
-  15: ["Ap 50 cm koki, augša sašķelta. Šķēlumā ielikts miets, kas tur zarus.", "Ātri un vienkārši uzceļams. Augstuma dēļ nav domāts vidēju un lielu lopu noturēšanai.", "Dobēm sētas iekšā: noformē dobi un atdala to no pārējā pagalma.", "Pāri palikuši vai viegli atrodami neapstrādāti tievi zari. Egle vai retāk lapkoks.", ["Latgales ciems"]],
+  15: ["Ap 50 cm koki, augša sašķelta. Šķēlumā ielikts zars, kas tur mazākus zarus.", "Ātri un vienkārši uzceļams. Augstuma dēļ nav domāts vidēju un lielu lopu noturēšanai.", "Dobēm sētas iekšā: noformē dobi un atdala to no pārējā pagalma.", "Pāri palikuši vai viegli atrodami neapstrādāti tievi zari. Egle vai retāk lapkoks.", ["Latgales ciems"]],
   16: ["Plati dēļi bez atstarpes, pienagloti pie kārtīm. Augšā neliels griezums.", "Katra saimniecība grieza savu augšmalu. Tas pats 18. gs. naglotais žogs, tikai ar apzinātu augšas formu.", "Iezīmē teritoriju, dod privātumu un izskatu. Augšas griezums ir izskata daļa.", "Egles vai priedes dēļi.", ["Latgales ciems"]],
   17: ["Stabu un kāršu rāmis. Kārtis nav cieši nofiksētas, un virs tām brīvi likti zari.", "Spraugas var mainīt ar baļķu atgriezumiem. Zari nav pīti un nav nagloti, tos var papildināt no apkārtnes.", "Aiztur lopus, kā pārējie kāršu žogi. Zari aizsedz daļu spraugu.", "Egle, priede un zari, kas ņemti uz vietas.", ["Latgales podnieka sēta"]],
-  18: ["Nelieli baļķi iesprausti zemē, augša saasināta. Vidū kalti caurumi, un caur tiem miets, kas satur baļķus kopā. Nav naglotu dēļu.", "Noturīgākais un masīvākais muzejā, bet grūti uzstādīt.", "Sētas priekšā pret ielu. Latgalē ciema sētās žogam pret ceļu bija jābūt.", "Egles un priedes baļķi.", ["Latgales ciems", "Latgales ciems"]],
+  18: ["Nelieli baļķi iesprausti zemē, augša saasināta. Vidū kalti caurumi, un caur tiem zars, kas satur baļķus kopā. Nav naglotu dēļu.", "Noturīgākais un masīvākais muzejā, bet grūti uzstādīt.", "Sētas priekšā pret ielu. Latgalē ciema sētās žogam pret ceļu bija jābūt.", "Egles un priedes baļķi.", ["Latgales ciems", "Latgales ciems"]],
 };
 
 const schemes = {
   konstrukcija: [
     ["Stabu un kāršu rāmis", "Stabi zemē un horizontālas kārtis, līdz aptuveni 6,5 m. Atšķiras savienojums.", [1, 2, 3, 4, 5, 17]],
     ["Pinums uz kāršu rāmja", "Tas pats rāmis. Zari pīti starp kārtīm.", [6, 7]],
-    ["Naglots pildījums", "Kārtis un nagla. Dēļi vai zari.", [9, 10, 11, 12, 16]],
+    ["Naglu pielietojums konstrukcijā", "Dēļi vai zari pienagloti pie kārtīm.", [9, 10, 11, 12, 16]],
     ["Bez kāršu rāmja", "Žogu tur stabi, akmeņi, augs vai zemē sprausti baļķi.", [8, 13, 14, 15, 18]],
   ],
   funkcija: [
@@ -437,6 +437,12 @@ document.addEventListener("keydown", (e) => {
   if (!view.hidden) closePhoto();
   else closeFence();
 });
+
+const navEl = document.querySelector("nav");
+const fitNav = () => document.documentElement.style.setProperty("--nav", navEl.offsetHeight + "px");
+new ResizeObserver(fitNav).observe(navEl);
+addEventListener("resize", () => { requestAnimationFrame(fitNav); map.invalidateSize(); });
+fitNav();
 
 document.documentElement.classList.add("js");
 const navLinks = [...document.querySelectorAll("nav a[href^='#']")];

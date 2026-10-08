@@ -16,11 +16,14 @@
 }
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
 }
 body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
+  overflow-wrap: break-word;
   font:
     17px/1.5 "Avenir Next",
     "Segoe UI",
@@ -37,7 +40,7 @@ nav {
   display: flex;
   gap: 22px;
   align-items: center;
-  height: var(--nav);
+  min-height: 57px;
   padding: 0 28px;
   background: rgba(244, 240, 232, 0.94);
   border-bottom: 1px solid var(--line);
@@ -48,6 +51,7 @@ nav b {
   font-family: Palatino, Georgia, serif;
   font-weight: 500;
   font-size: 18px;
+  white-space: nowrap;
 }
 .nav-rule {
   width: 1px;
@@ -253,10 +257,12 @@ h3 {
 }
 .class-name {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 12px;
+  gap: 4px 12px;
   margin: 34px 0 2px;
   font-size: 22px;
+  min-width: 0;
 }
 .class-name:first-child {
   margin-top: 20px;
@@ -457,9 +463,9 @@ h3 {
 }
 #view p {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
   margin: 0;
   text-align: center;
   color: var(--paper);
@@ -699,6 +705,9 @@ h3 {
 .house-frame.drag #house-view {
   cursor: grabbing;
 }
+.hint-touch {
+  display: none;
+}
 .house-hint,
 .map-hint {
   position: absolute;
@@ -792,6 +801,7 @@ h3 {
   min-width: 0;
 }
 #house-step {
+  flex: none;
   font-family: Palatino, Georgia, serif;
   font-size: 28px;
   font-weight: 500;
@@ -800,11 +810,14 @@ h3 {
   font-variant-numeric: tabular-nums;
 }
 .house-read span {
+  flex: none;
   color: #b3a898;
   font-variant-numeric: tabular-nums;
   font-size: 13px;
+  white-space: nowrap;
 }
 #house-label {
+  flex: 1;
   min-width: 0;
   color: var(--ink);
   font-family: Palatino, Georgia, serif;
@@ -974,6 +987,9 @@ h3 {
   border: 1px solid var(--line);
   border-top: 2px solid var(--rust);
 }
+.library > * {
+  min-width: 0;
+}
 
 table {
   width: 100%;
@@ -1015,6 +1031,23 @@ td.num {
 td.size,
 td.mat {
   white-space: nowrap;
+}
+@media (hover: none) and (pointer: coarse) {
+  .hint-mouse {
+    display: none;
+  }
+  .hint-touch {
+    display: inline;
+  }
+  .carousel button {
+    width: 44px;
+    height: 44px;
+  }
+  .tasks a:hover,
+  .type:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }
 .miss {
   color: var(--muted);
@@ -1144,22 +1177,33 @@ footer {
     gap: 14px;
     flex-wrap: nowrap;
     overflow: auto;
+    scrollbar-width: none;
+    padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
+  }
+  nav::-webkit-scrollbar {
+    display: none;
+  }
+  nav b {
+    flex: none;
   }
   main {
-    padding-inline: 16px;
+    padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
   }
   .study {
-    margin-inline: -16px;
-    padding-inline: 16px;
+    margin-inline: calc(-1 * max(16px, env(safe-area-inset-left))) calc(-1 * max(16px, env(safe-area-inset-right)));
+    padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
   }
   .tabs {
-    margin-inline: -16px;
-    padding-inline: 16px;
+    margin-inline: calc(-1 * max(16px, env(safe-area-inset-left))) calc(-1 * max(16px, env(safe-area-inset-right)));
+    padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
   }
   .house {
     box-shadow:
       0 0 0 4px var(--paper),
       0 0 0 5px #cbbfaa;
+  }
+  .house-cap {
+    flex-wrap: wrap;
   }
   .house-bar {
     grid-template-columns: 1fr;
@@ -1169,6 +1213,12 @@ footer {
     grid-row: auto;
     justify-self: start;
   }
+  #house-view {
+    height: min(54vh, 420px);
+  }
+  #map {
+    height: min(58vh, 440px);
+  }
   .house-hint,
   .map-hint {
     letter-spacing: 0.04em;
@@ -1176,5 +1226,223 @@ footer {
     white-space: normal;
     text-align: center;
     max-width: calc(100% - 28px);
+  }
+  #house-ruler {
+    height: 44px;
+    margin-inline: 12px;
+  }
+  #house-ruler button {
+    width: 22px;
+    height: 44px;
+  }
+  .plate {
+    width: max-content;
+    justify-self: center;
+  }
+  .carousel button {
+    width: 44px;
+    height: 44px;
+  }
+  .leaflet-container .leaflet-control-zoom.leaflet-bar a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+  }
+  .index {
+    table-layout: fixed;
+  }
+  .index th:first-child,
+  .index td:first-child {
+    width: 3rem;
+    white-space: nowrap;
+    letter-spacing: 0;
+    padding-inline: 10px 4px;
+  }
+  .index th,
+  .index td {
+    overflow-wrap: break-word;
+    padding: 12px 8px;
+  }
+  .photos figure {
+    width: min(168px, 100%);
+  }
+  .photos img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  #fence {
+    padding: 0;
+    align-items: stretch;
+  }
+  #fence article {
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    padding:
+      max(16px, env(safe-area-inset-top))
+      max(16px, env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom))
+      max(16px, env(safe-area-inset-left));
+    overscroll-behavior: contain;
+  }
+  #fence-x {
+    float: none;
+    display: block;
+    width: fit-content;
+    margin: 0 0 4px auto;
+    min-height: 44px;
+    padding: 8px 0;
+  }
+  .reed summary {
+    padding: 8px 0;
+  }
+  h1 {
+    font-size: clamp(34px, 11vw, 52px);
+  }
+}
+@media (max-width: 640px) {
+  .library thead {
+    display: none;
+  }
+  .library table,
+  .library tbody {
+    display: block;
+  }
+  .library tr.group,
+  .library tr.group td {
+    display: block;
+  }
+  .library tr.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 12px;
+    align-items: baseline;
+    padding: 11px 2px;
+    border-bottom: 1px solid var(--line);
+  }
+  .library tr.row td {
+    display: block;
+    border: 0;
+    padding: 0;
+    white-space: normal;
+  }
+  .library tr.row td:first-child {
+    flex: 1 0 100%;
+  }
+  .library td.num::before,
+  .library td.size::before {
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .library td.num::before {
+    content: "Skaits ";
+  }
+  .library td.size::before {
+    content: "Izmērs ";
+  }
+  .library td.mat {
+    color: var(--muted);
+  }
+  .index {
+    display: block;
+    border: 0;
+    background: transparent;
+  }
+  .index thead {
+    display: none;
+  }
+  .index tbody {
+    display: grid;
+    gap: 8px;
+  }
+  .index tr {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    column-gap: 8px;
+    row-gap: 2px;
+    padding: 12px 12px 11px;
+    background: var(--card);
+    border: 1px solid #ddd4c6;
+  }
+  .index td,
+  .index td:first-child {
+    display: block;
+    width: auto;
+    padding: 0;
+    border: 0;
+    white-space: normal;
+  }
+  .index td:first-child {
+    grid-row: 1 / span 2;
+    color: var(--rust);
+    font-family: Palatino, Georgia, serif;
+    font-size: 18px;
+  }
+  .index td:nth-child(3) {
+    color: var(--muted);
+    font-size: 14px;
+  }
+}
+@media (max-width: 560px) {
+  :root {
+    --nav: 84px;
+  }
+  nav {
+    flex-wrap: wrap;
+    align-content: center;
+    gap: 0 16px;
+    row-gap: 0;
+    overflow: visible;
+    padding: calc(8px + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 4px max(16px, env(safe-area-inset-left));
+  }
+  nav b {
+    flex: 1 0 100%;
+    margin: 0;
+    font-size: 17px;
+  }
+  .nav-rule {
+    display: none;
+  }
+  nav a {
+    padding: 8px 0 10px;
+  }
+  .tabs {
+    gap: 6px;
+  }
+  .tabs button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 6px;
+    font-size: 14px;
+    text-align: center;
+  }
+  .tasks b {
+    font-size: 22px;
+  }
+  .reed .result {
+    font-size: 24px;
+  }
+  #house-label {
+    font-size: 16px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    line-height: 1.15;
+  }
+}
+@media (max-width: 900px) and (max-height: 500px) {
+  #house-view {
+    height: 200px;
+  }
+  #map {
+    height: 220px;
+  }
+  .hero {
+    animation: none;
+  }
+  h1 {
+    margin-top: 8px;
   }
 }
