@@ -218,7 +218,7 @@ const schemes = {
   funkcija: [
     ["Aizturēt lopus", "Ganības un sētas, no kurām lopi nedrīkst iziet.", [1, 2, 3, 4, 5, 8, 11, 17]],
     ["Norobežot teritoriju", "Robeža, ceļš vai kaimiņu sēta. Augsts pinums aiztur arī dzīvniekus.", [6, 7, 14, 18]],
-    ["Sargāt dobes", "Zems žogs sētas iekšā.", [15]],
+    ["Norobežot dobes", "Zems žogs sētas iekšā.", [15]],
     ["Izskats un privātums", "Ceļa mala, pagalms, apgriezts vainags.", [9, 10, 12, 13, 16]],
   ],
   paņēmiens: [
