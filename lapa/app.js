@@ -30,6 +30,8 @@ const rows = [
   { id: 11, group: "Pamati", name: "Akmeņi perimetrā", n: 27, L: 400, W: 350, T: 150, mat: "akmens" },
 ];
 
+const material = (e) => e.mat === "akmens" ? "Akmens" : e.name.startsWith("Latas") ? "Egļu zari" : "Priežu koks";
+
 const size = (e) => {
   if (e.D && e.L) return `Ø ${e.D} · ${e.L} mm`;
   if (e.D) return `Ø ${e.D} mm · garums nav`;
@@ -44,12 +46,12 @@ const tbody = document.querySelector("#body");
 groups.forEach((g) => {
   const head = document.createElement("tr");
   head.className = "group";
-  head.innerHTML = `<td colspan="3">${g}</td>`;
+  head.innerHTML = `<td colspan="4">${g}</td>`;
   tbody.append(head);
   rows.filter((r) => r.group === g).forEach((r) => {
     const tr = document.createElement("tr");
     tr.className = "row";
-    tr.innerHTML = `<td>${r.name}</td><td class="num">${r.n}</td><td>${size(r)}</td>`;
+    tr.innerHTML = `<td>${r.name}</td><td class="num">${r.n}</td><td class="size">${size(r)}</td><td class="mat">${material(r)}</td>`;
     tr.addEventListener("click", () => select(r, tr));
     tbody.append(tr);
   });
@@ -64,7 +66,7 @@ function select(e, tr) {
   document.querySelector("#pick").hidden = false;
   document.querySelector("#empty").hidden = true;
   document.querySelector("#pick-name").textContent = e.name;
-  document.querySelector("#pick-meta").textContent = `${e.mat} · ${e.n} gab. · ${e.group}`;
+  document.querySelector("#pick-meta").textContent = `${material(e)} · ${e.n} gab. · ${e.group}`;
   const box = document.querySelector("#cross");
   box.innerHTML = "";
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -169,7 +171,7 @@ const fences = [
   { n: 2, lat: 56.993006, lng: 24.274775, name: "Stabu kāršu gropēs ar atstarpi" },
   { n: 3, lat: 56.987929, lng: 24.280367, name: "Stabu kāršu gropēs bez atstarpes" },
   { n: 4, lat: 56.988283, lng: 24.280429, name: "Stabu kāršu pāra stabiem piesietas" },
-  { n: 5, lat: 56.987652, lng: 24.281588, name: "Stabu kāršu pāra stabi atstutēti starp" },
+  { n: 5, lat: 56.987652, lng: 24.281588, name: "Stabu kāršu pāra stabi atstutēti starpās" },
   { n: 6, lat: 56.991357, lng: 24.276652, name: "Zedeņu vertikāli" },
   { n: 7, lat: 56.991845, lng: 24.268472, name: "Zedeņu horizontāli" },
   { n: 8, lat: 56.989095, lng: 24.278830, name: "Vilku žogs" },
@@ -186,8 +188,8 @@ const fences = [
 ];
 
 const copy = {
-  1: ["Stabi ierakti zemē. Katrā kalti caurumi, un horizontālās kārtis izvilktas tiem cauri. Posms starp stabiem ir līdz aptuveni 6,5 m.", "No koka, ko neizmantoja ēkām: šķībi, zaraini stabi un tievāki mieti kārtīm. Savienojums ir caurums, nevis grope vai saite.", "Biežāk ganību robeža vai sētas mala, lai lopi neizietu. Retāk tikai vizuāla teritorijas nodaļošana.", "Visbiežāk egle un priede. Kārtis ir apaļkoks, nevis zāģēts dēlis.", ["Vidzemes zemnieka sēta"]],
-  2: ["Stabi zemē ar gropēm. Kārtis ieliktas gropēs, un atstarpi starp tām tur klucīši.", "Spraugu var mainīt, liekot vai neliekot klucīšus. Tas pats pārpalikumu koks, kas caurumu žogam, tikai savienojums ir grope.", "Aiztur lopus. Caur redzamo spraugu nelaiž lielākus dzīvniekus, bet žogs paliek caurredzams.", "Egle un priede. Klucīši ir īsi koka gabali starp kārtīm.", ["Kurzemes zemnieka sēta", "Zemgale", "Kurzemes krasts"]],
+  1: ["Stabi ierakti zemē. Katrā kalti caurumi, un horizontālās kārtis izvilktas tiem cauri. Posms starp stabiem ir līdz aptuveni 6,5 m.", "No koka, ko neizmantoja ēkām: šķībi, zaraini stabi un tievāki mieti kārtīm. Kārtis ir ievietotas caurumos.", "Biežāk ganību robeža vai sētas mala, lai lopi neizietu. Retāk tikai vizuāla teritorijas nodaļošana.", "Visbiežāk egle un priede. Kārtis ir apaļkoks, nevis zāģēts dēlis.", ["Vidzemes zemnieka sēta"]],
+  2: ["Stabi zemē ar gropēm. Kārtis ieliktas gropēs, un atstarpi starp tām tur klucīši.", "Spraugu var mainīt, liekot dažāda izmēra klucīšus. Tas pats pārpalikumu koks, kas caurumu žogam, tikai savienojums ir grope.", "Aiztur lopus. Caur redzamo spraugu nelaiž lielākus dzīvniekus, bet žogs paliek caurredzams.", "Egle un priede. Klucīši ir īsi koka gabali starp kārtīm.", ["Kurzemes zemnieka sēta", "Zemgale", "Kurzemes krasts"]],
   3: ["Tās pašas gropes stabos, bet kārtis liktas cieši cita virs citas, bez klucīšiem un bez atstarpes.", "Blīvāks par caurumu žogu un par gropju žogu ar klucīšiem. Koks joprojām ir pārpalikumi, nevis zāģēti dēļi.", "Aiztur lopus. Caur žogu neredz, tāpēc tas nodala arī skatu.", "Egle un priede.", ["Krāslava"]],
   4: ["Kārtis nav kaltas caur stabu. Tās stāv starp pāra stabiem un ir piesietas pie tiem.", "Savienojums ir saite, nevis caurums vai grope. Stabu pāris satur kārts galu no abām pusēm.", "Aiztur lopus, tāpat kā pārējie stabu un kāršu žogi.", "Koks un sējums. Saite ir no klūgām, nevis nagla.", ["Latgale"]],
   5: ["Pāra stabi. Kārtis neiet caur stabu, bet guļ uz horizontāla šķērskoka starp tiem.", "Kārtis balstās uz šķērskoka, tāpēc tās var nomainīt, nekalot jaunu caurumu. Pāris ir kā piesietajam žogam, bet bez saites ap kārti.", "Aiztur lopus.", "Egle un priede. Šķērskoks ir tas pats apaļkoks.", ["Latgales ciems", "Latgale"]],
