@@ -186,24 +186,24 @@ const fences = [
 ];
 
 const copy = {
-  1: ["Stabi zemē. Kārtis iet caur kaltiem caurumiem.", "No pārpalikumiem: šķībi, zaraini stabi un mieti kārtīm.", "Biežāk ganību robeža, retāk tikai sētas nodaļošana.", "Egle un priede", ["Vidzemes zemnieka sēta"]],
-  2: ["Kārtis gropēs. Atstarpi starp tām tur klucīši.", "Spraugu var mainīt, neliekot vai liekot klucīšus.", "Aiztur lopus. Caur redzamo spraugu nelaiž lielākus dzīvniekus.", "Egle un priede", ["Kurzemes zemnieka sēta", "Zemgale", "Kurzemes krasts"]],
-  3: ["Kārtis gropēs cieši cita virs citas, bez atstarpes.", "Blīvāks par caurumu žogu. Tas pats pārpalikumu koks.", "Aiztur lopus. Caur žogu neredz.", "Egle un priede", ["Krāslava"]],
-  4: ["Kārtis starp pāra stabiem un piesietas pie tiem.", "Savienojums ir saite, nevis caurums stabā.", "Aiztur lopus.", "Koks un sējums", ["Latgale"]],
-  5: ["Kārtis guļ uz horizontāla koka starp stabiem.", "Kārtis neiet caur stabu. Tās balstās uz šķērskoka.", "Aiztur lopus.", "Egle un priede", ["Latgales ciems", "Latgale"]],
-  6: ["Stabi un horizontālas kārtis. Zari pīti stāvus starp kārtīm.", "No pārpalikumiem: resnie baļķi stabiem, tievie zari pildījumam.", "Norobežo zemi. Ja augsts, aiztur arī dzīvniekus.", "Priede, egle, bērzs", ["Vidzemes sēta", "Latgales ciems", "Latgales podnieka sēta"]],
-  7: ["Zari pīti guļus starp vertikāliem mietiem.", "Zemāks pinums. Materiāls tas pats, kas vertikālajam.", "Norobežo zemi. Augstums nosaka, vai aiztur dzīvniekus.", "Priede, egle, bērzs", ["Kurzemes zvejnieku ciems"]],
-  8: ["Pāra stabi. Starp tiem baļķi slīpi, piesieti pie stabiem.", "Pietiek ar cirvi. Vajag daudz atzarota koka. Muzejā ir viens šāds žogs.", "Aiztur dzīvniekus.", "Egle. Sējums no klūgām, lazdas vai bērza", ["Latgales ciems", "Latgales ciems", "Latgales ciems"]],
-  9: ["Starp stabiem kārtis, pie tām pienagloti plati dēļi bez atstarpes.", "Latgalē ceļa malā žogs bija obligāts. No 18. gs., kad ir nagla un zāģēts dēlis.", "Iezīmē teritoriju, dod privātumu un izskatu.", "Egles vai priedes dēļi", ["Latgale"]],
-  10: ["Šaurāki dēļi ar atstarpi, pienagloti pie kārtīm.", "Tas pats naglotais žogs. Sprauga ir daļa no izskata.", "Iezīmē teritoriju un sakārto pagalmu.", "Egles vai priedes dēļi", ["Latgale"]],
-  11: ["Kāršu žogs, kam pienagloti dēļi, lai būtu blīvāks.", "Uzstādīt tikpat viegli kā kāršu žogu. Iespējams vēlāk pārtaisīts.", "Sētām ar dažāda izmēra lopiem.", "Egle vai priede. Dēļi parasti no egles", ["Vidzemes zemnieka sēta", "Vidzemes zemnieka sēta"]],
-  12: ["Šauri zari pienagloti pie kārts.", "Nav zāģētu dēļu. Nagla tur zarus.", "Iezīmē teritoriju un dod izskatu.", "Zari, naglas", ["Jaunsēta"]],
-  13: ["Apgriezts krūmu vainags rindā.", "Dzīvs un regulāri apgriezts.", "Dekoratīvs, retāk norobežo zemi.", "Blīvi krūmi un koki, piemēram tūjas", ["Jaunsaimniecība"]],
-  14: ["Lieli akmeņi brīvi rindā, bez javas.", "Piejūrā, kur akmeņu daudz un koka maz. Vēsturiskās sētās Latvijā rets.", "Atdala sētu no kaimiņa.", "Lieli akmeņi", ["Kurzemes zvejnieku ciems", "Kurzemes zvejnieku ciems"]],
-  15: ["Ap 50 cm koki, augša sašķelta. Šķēlumā ielikts miets.", "Ātri uzceļams. Augstuma dēļ nelaiž vidējus un lielus lopus.", "Dobēm sētas iekšā.", "Tievie egļu vai retāk lapkoku zari", ["Latgales ciems"]],
-  16: ["Plati dēļi bez atstarpes, augšā neliels griezums.", "Katra saimniecība grieza savu augšmalu.", "Iezīmē teritoriju, dod privātumu un izskatu.", "Egles vai priedes dēļi", ["Latgales ciems"]],
-  17: ["Kāršu rāmis. Kārtis nav cieši nofiksētas, virsū brīvi zari.", "Spraugas maina ar baļķu atgriezumiem. Zarus ņem no apkārtnes.", "Aiztur lopus.", "Egle, priede un zari", ["Latgales krievu zemnieka sēta"]],
-  18: ["Baļķi iesprausti zemē, gali saasināti. Vidū miets caur kaltiem caurumiem.", "Masīvākais muzejā, grūti uzstādīt.", "Sētas priekšā pret ielu. Latgalē žogs pret ceļu bija prasība.", "Egles un priedes baļķi", ["Latgales ciems", "Latgales ciems"]],
+  1: ["Stabi ierakti zemē. Katrā kalti caurumi, un horizontālās kārtis izvilktas tiem cauri. Posms starp stabiem ir līdz aptuveni 6,5 m.", "No koka, ko neizmantoja ēkām: šķībi, zaraini stabi un tievāki mieti kārtīm. Savienojums ir caurums, nevis grope vai saite.", "Biežāk ganību robeža vai sētas mala, lai lopi neizietu. Retāk tikai vizuāla teritorijas nodaļošana.", "Visbiežāk egle un priede. Kārtis ir apaļkoks, nevis zāģēts dēlis.", ["Vidzemes zemnieka sēta"]],
+  2: ["Stabi zemē ar gropēm. Kārtis ieliktas gropēs, un atstarpi starp tām tur klucīši.", "Spraugu var mainīt, liekot vai neliekot klucīšus. Tas pats pārpalikumu koks, kas caurumu žogam, tikai savienojums ir grope.", "Aiztur lopus. Caur redzamo spraugu nelaiž lielākus dzīvniekus, bet žogs paliek caurredzams.", "Egle un priede. Klucīši ir īsi koka gabali starp kārtīm.", ["Kurzemes zemnieka sēta", "Zemgale", "Kurzemes krasts"]],
+  3: ["Tās pašas gropes stabos, bet kārtis liktas cieši cita virs citas, bez klucīšiem un bez atstarpes.", "Blīvāks par caurumu žogu un par gropju žogu ar klucīšiem. Koks joprojām ir pārpalikumi, nevis zāģēti dēļi.", "Aiztur lopus. Caur žogu neredz, tāpēc tas nodala arī skatu.", "Egle un priede.", ["Krāslava"]],
+  4: ["Kārtis nav kaltas caur stabu. Tās stāv starp pāra stabiem un ir piesietas pie tiem.", "Savienojums ir saite, nevis caurums vai grope. Stabu pāris satur kārts galu no abām pusēm.", "Aiztur lopus, tāpat kā pārējie stabu un kāršu žogi.", "Koks un sējums. Saite ir no klūgām, nevis nagla.", ["Latgale"]],
+  5: ["Pāra stabi. Kārtis neiet caur stabu, bet guļ uz horizontāla šķērskoka starp tiem.", "Kārtis balstās uz šķērskoka, tāpēc tās var nomainīt, nekalot jaunu caurumu. Pāris ir kā piesietajam žogam, bet bez saites ap kārti.", "Aiztur lopus.", "Egle un priede. Šķērskoks ir tas pats apaļkoks.", ["Latgales ciems", "Latgale"]],
+  6: ["Tas pats stabu un kāršu rāmis: stabi zemē, horizontālas kārtis caurumos vai gropēs. Gar kārtīm stāvus izlocīti tievāki zari.", "Blīvāka alternatīva kāršu žogam, kad vajag slēgtāku sienu. No pārpalikumiem: resnie baļķi stabiem, tievie zari pildījumam. Augstums mainās pēc darba.", "Norobežo zemi. Ja pinums ir augsts, aiztur arī dzīvniekus.", "Priede, egle, bērzs. Pildījums ir zari, nevis dēļi.", ["Vidzemes sēta", "Latgales ciems", "Latgales podnieka sēta"]],
+  7: ["Zari pīti guļus starp vertikāliem mietiem. Pinuma virziens ir pretējs vertikālajam zedeņam.", "Zemāks pinums. Materiāls tas pats, kas vertikālajam: pārpalikumi pēc ēku būves.", "Norobežo zemi. Augstums nosaka, vai žogs aiztur arī dzīvniekus.", "Priede, egle, bērzs.", ["Kurzemes zvejnieku ciems"]],
+  8: ["Pāra stabi. Starp tiem baļķi likti slīpi un piesieti pie stabiem. Nav horizontālu kāršu rāmja.", "Pietiek ar cirvi. Vajag daudz atzarota koka. Muzejā ir viens šāds žogs.", "Dzīvnieku aizturēšanai.", "Egle. Sējums no klūgām, lazdas vai bērza. Savienojums ir saite, nevis nagla.", ["Latgales ciems", "Latgales ciems", "Latgales ciems"]],
+  9: ["Starp zemē dzītiem stabiem kārtis, pie tām pienagloti plati dēļi cieši viens pie otra.", "Biežāk Latgalē, kur ceļa malā žogs bija obligāts. No 18. gs., vispirms muižās, vēlāk zemnieku sētās, kad ir nagla un zāģēts dēlis.", "Iezīmē teritoriju, dod privātumu un izskatu.", "Visbiežāk egles vai priedes dēļi.", ["Latgale"]],
+  10: ["Tā pati naglotā konstrukcija, bet dēļi šaurāki un starp tiem atstāta sprauga.", "Sprauga ir daļa no izskata, nevis klucītis kā kāršu žogā. Savienojums ir nagla, nevis grope.", "Iezīmē teritoriju un sakārto pagalmu. Caur spraugu redz, tāpēc privātums ir mazāks nekā blīvajam dēļu žogam.", "Egles vai priedes dēļi.", ["Latgale"]],
+  11: ["Stabu un kāršu žogs, kam papildus pienagloti dēļi, lai siena būtu blīvāka un mazāk caurejama.", "Uzstādīt tikpat viegli kā kāršu žogu. Papildu darbs ir dēļu naglošana. Iespējams, sākumā tas bija parasts kāršu žogs, vēlāk pārtaisīts.", "Sētām ar dažāda izmēra lopiem: kārtis aiztur lielākos, dēļi aizsedz spraugas mazākajiem.", "Egle vai priede. Dēļi parasti no egles.", ["Vidzemes zemnieka sēta", "Vidzemes zemnieka sēta"]],
+  12: ["Šauri zari pienagloti pie horizontālas kārts starp stabiem. Nav zāģētu dēļu.", "Nagla tur zarus, tāpēc tas ir naglotais žogs, nevis pinums. Zari ir pārpalikums dēļa vietā.", "Iezīmē teritoriju un dod izskatu, līdzīgi dēļu žogam, bet siena nav blīva.", "Zari, naglas un kārts. Nav zāģēta dēļa.", ["Jaunsēta"]],
+  13: ["Rindā audzēts un apgriezts krūmu vainags, kas veido garenu sienu. Nav stabu un kāršu.", "Pilnīgi dzīvs. Formu uztur, regulāri apgriežot.", "Dekoratīvs. Retāk to lieto zemes norobežošanai.", "Krūmi un koki ar blīvu vainagu, piemēram tūjas.", ["Jaunsaimniecība"]],
+  14: ["Lieli akmeņi brīvi rindā, bez javas un bez koka rāmja.", "Piejūrā, kur akmeņu daudz un koka maz. Vēsturiskās sētās Latvijā rets.", "Vienīgais darbs ir atdalīt sētu no blakus sētas.", "Lieli akmeņi.", ["Kurzemes zvejnieku ciems", "Kurzemes zvejnieku ciems"]],
+  15: ["Ap 50 cm koki, augša sašķelta. Šķēlumā ielikts miets, kas tur zarus.", "Ātri un vienkārši uzceļams. Augstuma dēļ nav domāts vidēju un lielu lopu noturēšanai.", "Dobēm sētas iekšā: noformē dobi un atdala to no pārējā pagalma.", "Pāri palikuši vai viegli atrodami neapstrādāti tievi zari. Egle vai retāk lapkoks.", ["Latgales ciems"]],
+  16: ["Plati dēļi bez atstarpes, pienagloti pie kārtīm. Augšā neliels griezums.", "Katra saimniecība grieza savu augšmalu. Tas pats 18. gs. naglotais žogs, tikai ar apzinātu augšas formu.", "Iezīmē teritoriju, dod privātumu un izskatu. Augšas griezums ir izskata daļa.", "Egles vai priedes dēļi.", ["Latgales ciems"]],
+  17: ["Stabu un kāršu rāmis. Kārtis nav cieši nofiksētas, un virs tām brīvi likti zari.", "Spraugas var mainīt ar baļķu atgriezumiem. Zari nav pīti un nav nagloti, tos var papildināt no apkārtnes.", "Aiztur lopus, kā pārējie kāršu žogi. Zari aizsedz daļu spraugu.", "Egle, priede un zari, kas ņemti uz vietas.", ["Latgales krievu zemnieka sēta"]],
+  18: ["Nelieli baļķi iesprausti zemē, augša saasināta. Vidū kalti caurumi, un caur tiem miets, kas satur baļķus kopā. Nav naglotu dēļu.", "Noturīgākais un masīvākais muzejā, bet grūti uzstādīt.", "Sētas priekšā pret ielu. Latgalē ciema sētās žogam pret ceļu bija jābūt.", "Egles un priedes baļķi.", ["Latgales ciems", "Latgales ciems"]],
 };
 
 const schemes = {
@@ -229,16 +229,13 @@ const schemes = {
 
 const post = (x, y = 12, h = 98) => `<rect x="${x}" y="${y}" width="7" height="${h}" fill="#1c1916"/>`;
 const bar = (y, x = 24, w = 112, h = 6) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#7c3a2d"/>`;
-const boards = (gap, top = 24) => Array.from({ length: 12 }, (_, i) => {
-  const x = 22 + i * (8 + gap);
-  return `<polygon points="${x},${108} ${x},${top + 8} ${x + 4},${top} ${x + 8},${top + 8} ${x + 8},${108}" fill="#1c1916"/>`;
-}).join("");
+const hole = (x, y) => `<circle cx="${x}" cy="${y}" r="3.2" fill="#f4f0e8"/>`;
 const diagrams = {
-  1: `${post(14)}${post(139)}${bar(34, 14, 132)}${bar(60, 14, 132)}${bar(86, 14, 132)}<circle cx="17.5" cy="37" r="3.2" fill="#f4f0e8"/><circle cx="17.5" cy="63" r="3.2" fill="#f4f0e8"/><circle cx="17.5" cy="89" r="3.2" fill="#f4f0e8"/>`,
+  1: `${post(14)}${post(139)}${bar(34, 14, 132)}${bar(60, 14, 132)}${bar(86, 14, 132)}${[37, 63, 89].map((y) => hole(17.5, y) + hole(142.5, y)).join("")}`,
   2: `${post(14)}${post(139)}${bar(28)}${bar(50)}${bar(72)}${bar(94)}<rect x="22" y="36" width="8" height="12" fill="#5e584e"/><rect x="130" y="58" width="8" height="12" fill="#5e584e"/><rect x="22" y="80" width="8" height="12" fill="#5e584e"/>`,
   3: `${post(14)}${post(139)}${[22, 34, 46, 58, 70, 82, 94].map((y, i) => `<rect x="24" y="${y}" width="112" height="12" fill="${i % 2 ? "#6d665c" : "#5e584e"}"/>`).join("")}`,
   4: `${post(8)}${post(18)}${post(132)}${post(142)}${bar(32, 26, 106)}${bar(58, 26, 106)}${bar(84, 26, 106)}<circle cx="21" cy="35" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="61" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="21" cy="87" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/>`,
-  5: `${post(14)}${post(139)}<rect x="24" y="86" width="112" height="8" fill="#1c1916"/>${bar(22, 32, 96, 12)}${bar(40, 32, 96, 12)}${bar(58, 32, 96, 12)}${bar(74, 32, 96, 12)}`,
+  5: `${post(2)}${post(22)}${post(131)}${post(151)}${[32, 58, 84].map((y) => `<rect x="9" y="${y + 6}" width="13" height="3" fill="#1c1916"/><rect x="138" y="${y + 6}" width="13" height="3" fill="#1c1916"/>`).join("")}${[32, 58, 84].map((y) => bar(y, 9, 142)).join("")}${post(2)}${post(22)}${post(131)}${post(151)}`,
   6: `${post(16, 16, 96)}${post(137, 16, 96)}${bar(34, 16, 128, 3)}${bar(62, 16, 128, 3)}${bar(90, 16, 128, 3)}<path d="M28 28 C34 48 26 70 32 100 M44 26 C38 50 48 72 42 104 M58 24 C64 50 52 74 60 106 M72 26 C66 48 76 76 70 104 M86 24 C92 52 80 74 88 106 M100 26 C94 50 104 78 98 104 M114 24 C120 50 110 76 118 106" fill="none" stroke="#1f3b33" stroke-width="1.4"/>`,
   7: `${[18, 42, 66, 90, 114, 138].map((x) => post(x, 28, 78)).join("")}<path d="M12 48 C40 36 70 60 100 46 C124 36 140 52 152 44 M12 66 C40 54 70 78 100 64 C124 54 140 70 152 62 M12 84 C40 72 70 96 100 82 C124 72 140 88 152 80" fill="none" stroke="#1f3b33" stroke-width="3"/>`,
   8: `${post(8)}${post(18)}${post(132)}${post(142)}<line x1="28" y1="108" x2="128" y2="18" stroke="#7c3a2d" stroke-width="4"/><line x1="28" y1="18" x2="128" y2="108" stroke="#5e584e" stroke-width="4"/><line x1="28" y1="64" x2="80" y2="18" stroke="#7c3a2d" stroke-width="4"/><line x1="70" y1="108" x2="128" y2="52" stroke="#5e584e" stroke-width="4"/><circle cx="21" cy="40" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="78" r="6" fill="none" stroke="#1f3b33" stroke-width="1.6"/>`,
@@ -249,7 +246,7 @@ const diagrams = {
   13: `<ellipse cx="36" cy="72" rx="26" ry="34" fill="#1f3b33"/><ellipse cx="78" cy="64" rx="30" ry="40" fill="#2a5246"/><ellipse cx="118" cy="74" rx="24" ry="32" fill="#1f3b33"/>`,
   14: `<line x1="8" y1="100" x2="152" y2="100" stroke="#d9d1c4" stroke-width="2"/>${[[28, 11], [58, 13], [88, 10], [114, 14], [140, 11]].map(([x, r]) => `<ellipse cx="${x}" cy="${98 - r * 0.7}" rx="${r}" ry="${r * 0.75}" fill="#5e584e"/>`).join("")}`,
   15: `${[28, 78, 128].map((x) => `${post(x, 70, 40)}<line x1="${x}" y1="70" x2="${x - 8}" y2="46" stroke="#1c1916" stroke-width="3"/><line x1="${x + 7}" y1="70" x2="${x + 15}" y2="46" stroke="#1c1916" stroke-width="3"/>`).join("")}${bar(56, 16, 128, 5)}`,
-  16: `${post(12)}${post(141)}${bar(96, 20, 120, 4)}${boards(0, 22)}`,
+  16: `${post(12)}${post(141)}${[0, 1, 2, 3].map((i) => `<circle cx="${19 + (i + 0.5) * 30.5}" cy="40" r="10" fill="#1c1916"/>`).join("")}${Array.from({ length: 12 }, (_, i) => `<rect x="${19 + i * (122 / 12)}" y="46" width="${122 / 12 + 0.4}" height="62" fill="#${i % 2 ? "1c1916" : "3a342c"}"/>`).join("")}`,
   17: `${post(14)}${post(139)}${bar(48)}${bar(70)}${bar(92)}<path d="M30 18 C48 40 40 28 60 44 M50 16 C70 36 64 22 88 40 M78 14 C96 38 90 20 118 42 M36 30 C58 18 80 34 110 16" fill="none" stroke="#1f3b33" stroke-width="1.3"/>`,
   18: `${bar(58, 16, 128, 5)}${Array.from({ length: 12 }, (_, i) => { const x = 20 + i * 10; return `<polygon points="${x},108 ${x + 2},20 ${x + 6},20 ${x + 8},108" fill="#1c1916"/>`; }).join("")}`,
 };
@@ -332,7 +329,7 @@ const card = (f) => {
   const el = document.createElement("article");
   el.className = "type";
   el.id = "tips-" + f.n;
-  el.innerHTML = `<div class="type-head"><svg class="diagram" viewBox="0 0 160 120" aria-hidden="true">${diagrams[f.n]}</svg><div><p class="tip-n">${f.n}</p><h3>${f.name}</h3><p class="role"></p><p class="body"></p><p class="extra"></p></div></div>`;
+  el.innerHTML = `<div class="type-head"><div class="plate"><svg class="diagram" viewBox="0 0 160 120" aria-hidden="true">${diagrams[f.n]}</svg><p class="tip-n">${String(f.n).padStart(2, "0")}</p></div><div class="type-copy"><h3>${f.name}</h3><p class="role"></p><div class="type-text"><p class="body"></p><p class="extra"></p></div></div></div>`;
   el.append(carousel(f.n, f.name, copy[f.n][4]));
   return el;
 };
@@ -343,8 +340,8 @@ const paint = (n) => {
   const [a, la, b, lb] = focus[tab];
   const text = copy[n];
   el.querySelector(".role").textContent = groupOf(n)[0];
-  el.querySelector(".body").innerHTML = `<b>${la}.</b> ${text[a]}`;
-  el.querySelector(".extra").innerHTML = `<b>${lb}.</b> ${text[b]}`;
+  el.querySelector(".body").innerHTML = `<b>${la}</b> ${text[a]}`;
+  el.querySelector(".extra").innerHTML = `<b>${lb}</b> ${text[b]}`;
 };
 const showScheme = (id, animate) => {
   const run = () => {
@@ -352,10 +349,13 @@ const showScheme = (id, animate) => {
     tabs.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.tab === id));
     list.replaceChildren();
     schemes[id].forEach(([title, note, ids]) => {
-      ids.forEach(paint);
+      ids.forEach((n, i) => {
+        paint(n);
+        cards[n].style.animationDelay = `${i * 35}ms`;
+      });
       const h = document.createElement("h3");
       h.className = "class-name";
-      h.textContent = title;
+      h.innerHTML = `${title}<span>${ids.length}</span>`;
       const p = document.createElement("p");
       p.className = "note";
       p.textContent = note;
@@ -426,3 +426,13 @@ document.addEventListener("keydown", (e) => {
   if (!view.hidden) closePhoto();
   else closeFence();
 });
+
+document.documentElement.classList.add("js");
+const navLinks = [...document.querySelectorAll("nav a[href^='#']")];
+const spy = new IntersectionObserver((entries) => {
+  entries.forEach((en) => {
+    if (!en.isIntersecting) return;
+    navLinks.forEach((a) => a.classList.toggle("here", a.getAttribute("href") === "#" + en.target.id));
+  });
+}, { rootMargin: "-42% 0px -48% 0px" });
+["zogi", "karte", "elementi", "avoti"].forEach((id) => spy.observe(document.getElementById(id)));

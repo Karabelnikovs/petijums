@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dižlīķu klēts · žogi un būvelementi</title>
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=23">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -12,30 +12,59 @@
     <b>Dižlīķu klēts</b>
     <a href="#zogi">Žogi</a>
     <a href="#karte">Karte</a>
+    <span class="nav-rule" aria-hidden="true"></span>
     <a href="#elementi">Būvelementi</a>
     <!-- <a href="#slaidi">Slaidi</a> -->
     <a href="#avoti">Avoti</a>
   </nav>
   <main>
-    <p class="kicker">RTU arhitektūra · 1. kurss · pētījums</p>
-    <h1>Žogi un klēts elementi</h1>
-    <p class="lead">Dižlīķu klēts, Kuldīgas pagasts, 1767. Kurzemes gulbūves tipa divtelpu klēts ar lieveni. Kartēšana ir žogu konstrukcija Brīvdabas muzejā. Bibliotēka ir šīs ēkas būvelementi.</p>
+    <header class="hero">
+      <p class="kicker">RTU arhitektūra · 1. kurss · pētījums</p>
+      <h1>Žogi un klēts elementi</h1>
+      <p class="lead">Dižlīķu klēts, Kuldīgas pagasts, 1767. Kurzemes gulbūves tipa divtelpu klēts ar lieveni.</p>
+      <div class="tasks">
+        <a href="#zogi">
+          <span>01 · Kartēšana</span>
+          <b>Žogi muzejā</b>
+          <p>18 tipi Brīvdabas muzejā. Konstrukcija, darbs un paņēmiens. Cipars sakrīt ar karti.</p>
+        </a>
+        <a href="#elementi">
+          <span>02 · Materiālu bibliotēka</span>
+          <b>Klēts būvelementi</b>
+          <p>Viena ēka, piecas grupas. Sienas, lievenis, pārsegumi, jumts un pamati.</p>
+        </a>
+      </div>
+    </header>
 
-    <h2 id="zogi">Žogi</h2>
-    <p class="lead">18 tipi Brīvdabas muzejā. Trīs cilnes ir trīs kārtības: kā žogs ir salikts, kādu darbu tas dara, un ar ko tas ir būvēts. Cipars sakrīt ar karti.</p>
-    <div class="tabs" id="fence-tabs"></div>
-    <div id="fence-list"></div>
+    <section class="study fences">
+      <div class="study-head reveal">
+        <p class="kicker">Pirmais uzdevums</p>
+        <h2 id="zogi">Žogi</h2>
+        <p class="lead">Trīs cilnes ir trīs kārtības: kā žogs ir salikts, kādu darbu tas dara, un ar ko tas ir būvēts.</p>
+      </div>
+      <div id="fence-block">
+        <div class="tabs" id="fence-tabs"></div>
+        <div id="fence-list"></div>
+      </div>
+      <div class="atlas reveal">
+        <h2 id="karte">Karte</h2>
+        <p class="lead">18 žogu tipi Brīvdabas muzejā. Cipars ir numurs no kopsavilkuma. Karti var pietuvināt un attālināt.</p>
+        <div id="map"></div>
+        <table class="index" id="fence-index"></table>
+      </div>
+      <section class="closing">
+        <h2>Secinājumi</h2>
+      </section>
+    </section>
 
+    <section class="study barn">
+      <div class="study-head reveal">
+        <p class="kicker">Otrais uzdevums</p>
+        <h2 id="elementi">Būvelementi</h2>
+        <p class="lead">Viena ēka, piecas grupas. Kokam un akmenim rādām garumu, platumu un biezumu vai diametru. Laukums un tilpums ir tikai niedru jumtam. Ziemeļu fasāde ir četri posmi, 6 + 6 + 4 + 6 = 22 baļķi.</p>
+      </div>
 
-    <h2 id="karte">Karte</h2>
-    <p class="lead">18 žogu tipi Brīvdabas muzejā. Cipars ir numurs no kopsavilkuma. Karti var pietuvināt un attālināt.</p>
-    <div id="map"></div>
-    <table class="index" id="fence-index"></table>
-
-    <h2 id="elementi">Būvelementi</h2>
-    <p class="lead">Viena ēka, piecas grupas. Kokam un akmenim rādām garumu, platumu un biezumu vai diametru. Laukums un tilpums ir tikai niedru jumtam. Ziemeļu fasāde ir četri posmi, 6 + 6 + 4 + 6 = 22 baļķi.</p>
-
-    <article class="reed">
+      <article class="reed reveal">
       <h3>Niedru jumts</h3>
       <p class="result">123,1 m² · 36,9 m³</p>
       <div class="reed-grid">
@@ -75,16 +104,26 @@
     </article>
 
     <div class="house">
-      <canvas id="house-view"></canvas>
+      <div class="house-cap">
+        <p class="kicker">3D skats</p>
+        <p>Dižlīķu klēts · 1767</p>
+      </div>
+      <div class="house-frame">
+        <canvas id="house-view"></canvas>
+        <p class="house-hint">Velc, lai pagrieztu · ritenis pietuvina</p>
+      </div>
       <div class="house-bar">
-        <button type="button" id="house-play">Spēlēt</button>
-        <input id="house-range" type="range" min="0" max="10" value="10">
-        <span id="house-label"></span>
+        <button type="button" id="house-play" aria-pressed="false"><i></i><span>Spēlēt</span></button>
+        <div class="house-read" aria-live="polite">
+          <b id="house-step">11</b>
+          <span>/ 11</span>
+          <em id="house-label"></em>
+        </div>
+        <div id="house-ruler" role="group" aria-label="Salikšanas posmi"></div>
       </div>
     </div>
-    <p class="note">Modelis ir samontētā klēts no Blender faila, ar tā materiāliem. Spēlēt saliek to pa posmiem, kā PDF animācijā. Skatu var pagriezt un pietuvināt.</p>
 
-    <div class="library">
+    <div class="library reveal">
       <div>
         <table>
           <thead>
@@ -104,6 +143,10 @@
         </div>
       </aside>
     </div>
+      <section class="closing">
+        <h2>Secinājumi</h2>
+      </section>
+    </section>
 
     <!-- <h2 id="slaidi">Septiņi slaidi</h2>
     <p class="note">Kreisā kolonna ir teksts uz slaida. Labā ir tas, ko pateikt. Kopā ap piecām minūtēm.</p>
@@ -190,7 +233,7 @@
     </article>
   </div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="app.js?v=14"></script>
-  <script type="module" src="house.js?v=4"></script>
+  <script src="app.js?v=20"></script>
+  <script type="module" src="house.js?v=6"></script>
 </body>
 </html>
