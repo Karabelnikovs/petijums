@@ -12,7 +12,7 @@ const rows = [
   { id: 29, group: "Lievenis", name: "Lieveņa sijas", n: 4, L: 1640, W: 160, T: 120, mat: "koks" },
   { id: 30, group: "Lievenis", name: "Baļķi virs lieveņa stabiem", n: 2, L: 10300, W: 320, T: 160, mat: "koks" },
   { id: 12, group: "Lievenis", name: "Dēļi, lieveņa griesti", n: 26, L: 4200, W: 200, T: 40, mat: "zāģēts koks" },
-  { id: 28, group: "Lievenis", name: "Slieksnis", n: 2, L: 900, W: 150, mat: "koks" },
+  { id: 28, group: "Lievenis", name: "Slieksnis", n: 2, L: 900, W: 150, T: 150, mat: "koks" },
   { id: 13, group: "Pārsegumi", name: "Dēļi, graudu klēts grīda", n: 18, L: 5100, W: 300, T: 25, mat: "zāģēts koks" },
   { id: 15, group: "Pārsegumi", name: "Dēļi, noliktavas grīda", n: 18, L: 4820, W: 300, T: 40, mat: "zāģēts koks" },
   { id: 17, group: "Pārsegumi", name: "Dēļi, graudu klēts griesti", n: 21, L: 5100, W: 400, T: 40, mat: "zāģēts koks" },
@@ -23,8 +23,8 @@ const rows = [
   { id: 20, group: "Jumts", name: "Latas, Z un D fasāde", n: 36, L: 6900, D: 70, mat: "apaļkoks" },
   { id: 21, group: "Jumts", name: "Latas, R un A fasāde", n: 6, L: 4100, D: 70, mat: "apaļkoks" },
   { id: 25, group: "Jumts", name: "Vējdēļi", n: 4, L: 2730, W: 350, T: 40, mat: "zāģēts koks" },
-  { id: 26, group: "Jumts", name: "Augšējie spārneši", n: 6, W: 100, T: 100, mat: "koks" },
-  { id: 27, group: "Jumts", name: "Apakšējie spārneši", n: 4, D: 130, mat: "apaļkoks" },
+  { id: 26, group: "Jumts", name: "Augšējie spārneši", n: 6, L: 2410, W: 100, T: 100, mat: "koks" },
+  { id: 27, group: "Jumts", name: "Apakšējie spārneši", n: 4, L: 4820, D: 130, mat: "apaļkoks" },
   { id: 23, group: "Pamati", name: "Pamata baļķis", n: 7, L: 10600, W: 260, T: 200, mat: "koks" },
   { id: 31, group: "Pamati", name: "Balstenis", n: 10, L: 400, W: 400, T: 150, mat: "koks" },
   { id: 11, group: "Pamati", name: "Akmeņi perimetrā", n: 27, L: 400, W: 350, T: 150, mat: "akmens" },
@@ -240,13 +240,12 @@ const diagrams = {
   5: `${post(2)}${post(22)}${post(131)}${post(151)}${[32, 58, 84].map((y) => `<rect x="9" y="${y + 6}" width="13" height="3" fill="#1c1916"/><rect x="138" y="${y + 6}" width="13" height="3" fill="#1c1916"/>`).join("")}${[32, 58, 84].map((y) => bar(y, 9, 142)).join("")}${post(2)}${post(22)}${post(131)}${post(151)}`,
   6: `${post(16, 16, 96)}${post(137, 16, 96)}${bar(34, 16, 128, 3)}${bar(62, 16, 128, 3)}${bar(90, 16, 128, 3)}<path d="M28 28 C34 48 26 70 32 100 M44 26 C38 50 48 72 42 104 M58 24 C64 50 52 74 60 106 M72 26 C66 48 76 76 70 104 M86 24 C92 52 80 74 88 106 M100 26 C94 50 104 78 98 104 M114 24 C120 50 110 76 118 106" fill="none" stroke="#1f3b33" stroke-width="1.4"/>`,
   7: `${[18, 42, 66, 90, 114, 138].map((x) => post(x, 28, 78)).join("")}<path d="M12 48 C40 36 70 60 100 46 C124 36 140 52 152 44 M12 66 C40 54 70 78 100 64 C124 54 140 70 152 62 M12 84 C40 72 70 96 100 82 C124 72 140 88 152 80" fill="none" stroke="#1f3b33" stroke-width="3"/>`,
-  8: `${post(8)}${post(18)}${post(132)}${post(142)}${[
-    [20, 14, 136, 62],
-    [20, 25, 136, 73],
-    [20, 36, 136, 84],
-    [20, 47, 136, 95],
-    [20, 58, 136, 106],
-  ].map(([x1, y1, x2, y2], i) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${i % 2 ? "#5e584e" : "#7c3a2d"}" stroke-width="4" stroke-linecap="round"/>`).join("")}<circle cx="21" cy="25" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="21" cy="47" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="73" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="95" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/>`,
+  8: `${post(8)}${post(18)}${post(132)}${post(142)}${[-34, -26, -18, -10, -2, 6, 14, 22, 30, 38, 46, 54, 62, 70, 78, 86, 94, 102, 108].map((b, i) => {
+    const xAt = (y) => 20 + (y - b) * 29 / 12;
+    const x1 = Math.max(20, xAt(12)), x2 = Math.min(136, xAt(110));
+    const y1 = +(b + (x1 - 20) * 12 / 29).toFixed(1), y2 = +(b + (x2 - 20) * 12 / 29).toFixed(1);
+    return `<line x1="${+x1.toFixed(1)}" y1="${y1}" x2="${+x2.toFixed(1)}" y2="${y2}" stroke="${i % 2 ? "#5e584e" : "#7c3a2d"}" stroke-width="5" stroke-linecap="round"/>`;
+  }).join("")}<circle cx="21" cy="30" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="21" cy="62" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="54" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/><circle cx="136" cy="86" r="5.5" fill="none" stroke="#1f3b33" stroke-width="1.6"/>`,
   9: `${post(12)}${post(141)}${bar(30, 20, 120, 4)}${bar(96, 20, 120, 4)}${Array.from({ length: 14 }, (_, i) => `<rect x="${22 + i * 8}" y="24" width="8" height="84" fill="#${i % 2 ? "1c1916" : "3a342c"}"/>`).join("")}`,
   10: `${post(12)}${post(141)}${bar(30, 20, 120, 4)}${bar(96, 20, 120, 4)}${Array.from({ length: 8 }, (_, i) => `<rect x="${24 + i * 15}" y="24" width="7" height="84" fill="#1c1916"/>`).join("")}`,
   11: `${post(12)}${post(141)}${bar(20, 20, 120, 6)}${bar(78, 20, 120, 4)}${Array.from({ length: 9 }, (_, i) => `<rect x="${26 + i * 13}" y="40" width="8" height="68" fill="#5e584e"/>`).join("")}`,
