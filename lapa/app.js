@@ -9,6 +9,7 @@ const rows = [
   { id: 9, group: "Sienas", name: "Baļķi starp telpām", n: 8, L: 5100, W: 160, T: 160, mat: "koks" },
   { id: 10, group: "Lievenis", name: "Dēļi, lieveņa grīda", n: 63, L: 1640, W: 150, T: 25, mat: "zāģēts koks" },
   { id: 14, group: "Lievenis", name: "Lieveņa stabi", n: 6, L: 2000, W: 220, T: 150, mat: "koks" },
+  { id: 32, group: "Lievenis", name: "Arka", n: 10, L: 400, W: 400, T: 150, mat: "koks", shape: "arka" },
   { id: 29, group: "Lievenis", name: "Lieveņa sijas", n: 4, L: 1640, W: 160, T: 120, mat: "koks" },
   { id: 30, group: "Lievenis", name: "Baļķi virs lieveņa stabiem", n: 2, L: 10300, W: 320, T: 160, mat: "koks" },
   { id: 12, group: "Lievenis", name: "Dēļi, lieveņa griesti", n: 26, L: 4200, W: 200, T: 40, mat: "zāģēts koks" },
@@ -27,7 +28,6 @@ const rows = [
   { id: 27, group: "Jumts", name: "Apakšējie spārneši", n: 4, L: 4820, D: 130, mat: "apaļkoks" },
   { id: 23, group: "Pamati", name: "Pamata baļķis", n: 7, L: 10600, W: 260, T: 200, mat: "koks" },
   { id: 31, group: "Pamati", name: "Balstenis", n: 10, L: 400, W: 400, T: 150, mat: "koks" },
-  { id: 32, group: "Pamati", name: "Arka", n: 10, L: 400, W: 400, T: 150, mat: "koks" },
   { id: 11, group: "Pamati", name: "Akmeņi perimetrā", n: 27, L: 400, W: 350, T: 150, mat: "akmens" },
 ];
 
@@ -73,7 +73,18 @@ function select(e, tr, fromUser) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 260 170");
   svg.setAttribute("class", "cross");
-  if (e.D) {
+  if (e.shape === "arka") {
+    const s = 110 / Math.max(e.L, e.W);
+    const a = e.L * s;
+    const b = e.W * s;
+    const t = Math.max(a, b) * 0.14;
+    const r = Math.max(a, b) * 1.25;
+    const x = 28;
+    const y = 18;
+    svg.innerHTML = `<path d="M ${x} ${y} H ${x + a} V ${y + b} H ${x + a - t} A ${r} ${r} 0 0 0 ${x} ${y + t} V ${y} Z" fill="none" stroke="#1c1916" stroke-width="1.5"/>
+      <text x="${x}" y="${y + b + 16}" font-size="12" font-family="Avenir Next, sans-serif">${e.L} mm</text>
+      <text x="${x + a + 8}" y="${y + b / 2}" font-size="12" font-family="Avenir Next, sans-serif">${e.W} mm</text>`;
+  } else if (e.D) {
     svg.innerHTML = `<circle cx="90" cy="85" r="48" fill="none" stroke="#1c1916" stroke-width="1.5"/><text x="150" y="80" font-size="13" font-family="Avenir Next, sans-serif">Ø ${e.D} mm</text><text x="150" y="100" font-size="13" font-family="Avenir Next, sans-serif">${e.L ? "L " + e.L + " mm" : "garums nav"}</text>`;
   } else if (e.W && e.T) {
     const s = 120 / Math.max(e.W, e.T);
@@ -192,11 +203,11 @@ const copy = {
   1: ["Stabi ierakti zemē. Katrā kalti caurumi, un horizontālās kārtis izvilktas tiem cauri. Posms starp stabiem ir līdz aptuveni 6,5 m.", "No koka, ko neizmantoja ēkām: šķībi, zaraini stabi un tievāki zari kārtīm. Kārtis ir ievietotas caurumos.", "Biežāk ganību robeža vai sētas mala, lai lopi neizietu. Retāk tikai vizuāla teritorijas nodaļošana.", "Visbiežāk egle un priede. Kārtis ir apaļkoks, nevis zāģēts dēlis.", ["Vidzemes zemnieka sēta"]],
   2: ["Stabi zemē ar gropēm. Kārtis ieliktas gropēs, un atstarpi starp tām tur klucīši.", "Spraugu var mainīt, liekot dažāda izmēra klucīšus. Tas pats pārpalikumu koks, kas caurumu žogam, tikai savienojums ir grope.", "Aiztur lopus. Caur redzamo spraugu nelaiž lielākus dzīvniekus, bet žogs paliek caurredzams.", "Egle un priede. Klucīši ir īsi koka gabali starp kārtīm.", ["Kurzemes zemnieka sēta", "Zemgale", "Kurzemes zvejnieku ciems"]],
   3: ["Tās pašas gropes stabos, bet kārtis liktas cieši cita virs citas, bez klucīšiem un bez atstarpēm.", "Blīvāks par caurumu žogu un par gropju žogu ar klucīšiem. Koks joprojām ir pārpalikumi, nevis zāģēti dēļi.", "Aiztur lopus. Caur žogu neredz, tāpēc tas nodala arī skatu.", "Egle un priede.", ["Krāslava"]],
-  4: ["Kārtis nav kaltas caur stabu. Tās stāv starp pāra stabiem un ir piesietas pie tiem.", "Savienojums ir saite, nevis caurums vai grope. Stabu pāris satur kārts galu no abām pusēm.", "Aiztur lopus, tāpat kā pārējie stabu un kāršu žogi.", "Koks un sējums. Saite ir no klūgām, nevis nagla.", ["Latgale"]],
+  4: ["Kārtis nav kaltas caur stabu. Tās stāv starp pāra stabiem un ir piesietas pie tiem.", "Savienojums ir saite, nevis caurums vai grope. Stabu pāris satur kārts galu no abām pusēm.", "Aiztur lopus, tāpat kā pārējie stabu un kāršu žogi.", "Koks un sasējums. Saite ir no klūgām, nevis nagla.", ["Latgale"]],
   5: ["Pāra stabi. Kārtis neiet caur stabu, bet guļ uz horizontāla šķērskoka starp tiem.", "Kārtis balstās uz šķērskoka, tāpēc tās var nomainīt, nekalot jaunu caurumu. Pāris ir kā piesietajam žogam, bet bez saites ap kārti.", "Aiztur lopus.", "Egle un priede. Šķērskoks ir tas pats apaļkoks.", ["Latgales ciems", "Latgale"]],
   6: ["Tas pats stabu un kāršu rāmis: stabi zemē, horizontālas kārtis caurumos vai gropēs. Gar kārtīm stāvus izlocīti tievāki zari.", "Blīvāka alternatīva kāršu žogam, kad vajag slēgtāku sienu. No pārpalikumiem: resnie baļķi stabiem, tievie zari pildījumam. Augstums mainās atkarībā no funkcijas.", "Norobežo zemi. Ja pinums ir augsts, aiztur arī dzīvniekus.", "Priede, egle, bērzs. Pildījums ir zari, nevis dēļi.", ["Vidzemes sēta", "Latgales ciems", "Latgales podnieka sēta"]],
   7: ["Zari pīti guļus starp vertikālām kārtīm. Pinuma virziens ir pretējs vertikālajam zedeņam.", "Zemāks pinums. Materiāls tas pats, kas vertikālajam: pārpalikumi pēc ēku būves.", "Norobežo zemi. Augstums nosaka, vai žogs aiztur arī dzīvniekus.", "Priede, egle, bērzs.", ["Kurzemes zvejnieku ciems"]],
-  8: ["Pāra stabi. Starp tiem baļķi likti slīpi un piesieti pie stabiem. Nav horizontālu kāršu rāmja.", "Pietiek ar cirvi. Vajag daudz atzarota koka. Muzejā ir viens šāds žogs.", "Dzīvnieku aizturēšanai.", "Egle. Sējums no klūgām, lazdas vai bērza. Savienojums ir saite, nevis nagla.", ["Latgales ciems", "Latgales ciems", "Latgales ciems"]],
+  8: ["Pāra stabi. Starp tiem baļķi likti slīpi un piesieti pie stabiem. Nav horizontālu kāršu rāmja.", "Pietiek ar cirvi. Vajag daudz atzarota koka. Muzejā ir viens šāds žogs.", "Dzīvnieku aizturēšanai.", "Egle. Sasējums no klūgām, lazdas vai bērza. Savienojums ir saite, nevis nagla.", ["Latgales ciems", "Latgales ciems", "Latgales ciems"]],
   9: ["Starp zemē dzītiem stabiem kārtis, pie tām pienagloti plati dēļi cieši viens pie otra.", "Biežāk Latgalē, kur ceļa malā žogs bija obligāts. No 18. gs., vispirms muižās, vēlāk zemnieku sētās, kad ir nagla un zāģēts dēlis.", "Iezīmē teritoriju, dod privātumu un izskatu.", "Visbiežāk egles vai priedes dēļi.", ["Latgale"]],
   10: ["Tā pati naglotā konstrukcija, bet dēļi šaurāki un starp tiem atstāta sprauga.", "Sprauga ir daļa no izskata, nevis klucītis kā kāršu žogā. Savienojums ir nagla, nevis grope.", "Iezīmē teritoriju un sakārto pagalmu. Caur spraugu redz, tāpēc privātums ir mazāks nekā blīvajam dēļu žogam.", "Egles vai priedes dēļi.", ["Latgale"]],
   11: ["Stabu un kāršu žogs, kam papildus pienagloti dēļi, lai siena būtu blīvāka un mazāk caurejama.", "Uzstādīt tikpat viegli kā kāršu žogu. Papildu darbs ir dēļu naglošana. Iespējams, sākumā tas bija parasts kāršu žogs, vēlāk pārtaisīts.", "Sētām ar dažāda izmēra lopiem: kārtis aiztur lielākos, dēļi aizsedz spraugas mazākajiem.", "Egle vai priede. Dēļi parasti no egles.", ["Vidzemes zemnieka sēta", "Vidzemes zemnieka sēta"]],
@@ -211,20 +222,20 @@ const copy = {
 
 const schemes = {
   konstrukcija: [
-    ["Stabu un kāršu rāmis", "Stabi zemē un horizontālas kārtis, līdz aptuveni 6,5 m. Atšķiras savienojums.", [1, 2, 3, 4, 5, 17]],
+    ["Stabu un kāršu konstrukcija", "Stabi zemē un horizontālas kārtis, līdz aptuveni 6,5 m. Atšķiras savienojums.", [1, 2, 3, 4, 5, 17]],
     ["Pinums uz kāršu rāmja", "Tas pats rāmis. Zari pīti starp kārtīm.", [6, 7]],
     ["Naglu pielietojums konstrukcijā", "Dēļi vai zari pienagloti pie kārtīm.", [9, 10, 11, 12, 16]],
     ["Bez kāršu rāmja", "Žogu tur stabi, akmeņi, augs vai zemē sprausti baļķi.", [8, 13, 14, 15, 18]],
   ],
   funkcija: [
-    ["Aizturēt lopus", "Ganības un sētas, no kurām lopi nedrīkst iziet.", [1, 2, 3, 4, 5, 8, 11, 17]],
-    ["Norobežot teritoriju", "Robeža, ceļš vai kaimiņu sēta. Augsts pinums aiztur arī dzīvniekus.", [6, 7, 14, 18]],
-    ["Norobežot dobes", "Zems žogs sētas iekšā.", [15]],
-    ["Izskats un privātums", "Ceļa mala, pagalms, apgriezts vainags.", [9, 10, 12, 13, 16]],
+    ["Lopu aizturēšana", "Ganības un sētas, no kurām lopi nedrīkst iziet.", [1, 2, 3, 4, 5, 8, 11, 17]],
+    ["Teritorijas norobežojums", "Robeža, ceļš vai kaimiņu sēta. Augsts pinums aiztur arī dzīvniekus.", [6, 7, 14, 18]],
+    ["Dobes norobežošana", "Zems žogs sētas iekšā.", [15]],
+    ["Dekorācija un privātums", "Ceļa mala, pagalms, apgriezts vainags.", [9, 10, 12, 13, 16]],
   ],
   paņēmiens: [
-    ["Cirvis un sējums", "Apaļkoks, grope vai caurums, saite no klūgām.", [1, 2, 3, 4, 5, 6, 7, 8, 15, 17, 18]],
-    ["Nagla un zāģēts koks", "No 18. gs., kad nagla un dēlis ir pieejami.", [9, 10, 11, 12, 16]],
+    ["Koka ieciršana, grebšana ", "Apaļkoks, grope vai caurums, saite no klūgām.", [1, 2, 3, 4, 5, 6, 7, 8, 15, 17, 18]],
+    ["Koka zāģēšana, naglošana", "No 18. gs., kad nagla un dēlis ir pieejami.", [9, 10, 11, 12, 16]],
     ["Akmens", "Brīvi likti akmeņi, bez javas.", [14]],
     ["Augs", "Dzīvs krūms, ko apgriež.", [13]],
   ],
